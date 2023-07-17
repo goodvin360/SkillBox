@@ -8,15 +8,15 @@ using namespace std;
 
 int main() {
 #ifdef SPRING
-    std::cout << "Spring"<<std::endl;
+    cout << "Spring"<<endl;
 #endif
 #ifdef SUMMER
-    std::cout << "Summer"<<std::endl;
+    cout << "Summer"<<endl;
 #endif
 #ifdef AUTUMN
-    std::cout << "Autumn"<<std::endl;
+    cout << "Autumn"<<endl;
 #endif
 #ifdef WINTER
-    std::cout << "Winter"<<std::endl;
+    cout << "Winter"<<endl;
 #endif
 }
