@@ -7,16 +7,19 @@ using namespace std;
 //#define WINTER
 
 int main() {
-#ifdef SPRING
-    cout << "Spring"<<endl;
-#endif
-#ifdef SUMMER
-    cout << "Summer"<<endl;
-#endif
-#ifdef AUTUMN
-    cout << "Autumn"<<endl;
-#endif
-#ifdef WINTER
-    cout << "Winter"<<endl;
-#endif
+    cout << "Task 2" << endl;
+    #ifdef SPRING
+        cout << "Spring"<<endl;
+    #endif
+    #ifdef SUMMER
+        cout << "Summer"<<endl;
+    #endif
+    #ifdef AUTUMN
+        cout << "Autumn"<<endl;
+    #endif
+    #ifdef WINTER
+        cout << "Winter"<<endl;
+    #endif
+
+    return 0;
 }
