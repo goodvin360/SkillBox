@@ -1,9 +1,8 @@
 #include <iostream>
 #include "vector"
 
-using namespace std;
 
-void swapvec(vector<int>&v, int*p)
+void swapvec(std::vector<int>&v, int*p)
 {
     int temp;
     for (int i=0; i<4; i++)
@@ -15,20 +14,20 @@ void swapvec(vector<int>&v, int*p)
 }
 
 int main() {
-    cout << "Task 1" << endl;
+    std::cout << "Task 1" << std::endl;
 
-    vector<int>v={1,2,3,4};
+    std::vector<int>v={1,2,3,4};
     int ar[4]={2,4,6,8};
 
     swapvec(v,ar);
 
     for(int i = 0; i < 4; ++i)
-        cout << v[i];
+        std::cout << v[i];
 
-    cout << endl;
+    std::cout << std::endl;
 
     for(int i = 0; i < 4; ++i)
-        cout << ar[i];
+        std::cout << ar[i];
 
     return 0;
 }

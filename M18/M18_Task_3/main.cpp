@@ -2,7 +2,6 @@
 #include "sstream"
 #include "cmath"
 
-using namespace std;
 
 void evenCalc(long long& a, int& b)
 {
@@ -27,7 +26,7 @@ void evenCalc(long long& a, int& b)
 }
 
 int main() {
-    cout << "Task 3" << endl;
+    std::cout << "Task 3" << std::endl;
 
     int ans=0;
 
@@ -35,7 +34,7 @@ int main() {
 
     evenCalc(n, ans);
 
-    cout << "ans = " << ans;
+    std::cout << "ans = " << ans;
 
     return 0;
 }

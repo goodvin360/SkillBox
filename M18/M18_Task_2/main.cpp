@@ -1,6 +1,5 @@
 #include <iostream>
 
-using namespace std;
 
 int jumps(int stairs, int maxJump =3)
 {
@@ -8,16 +7,16 @@ int jumps(int stairs, int maxJump =3)
         return 1;
 
     int total_jumps=0;
-    for (int i = 1; i <= min(maxJump, stairs); ++i)
+    for (int i = 1; i <= std::min(maxJump, stairs); ++i)
         total_jumps += jumps(stairs - i, maxJump);
 
     return total_jumps;
 }
 
 int main() {
-    cout << "Task 2" << endl;
+    std::cout << "Task 2" << std::endl;
 
-    cout << jumps(3,2) << endl;
+    std::cout << jumps(3,2) << std::endl;
 
     return 0;
 }
