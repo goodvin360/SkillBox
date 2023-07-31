@@ -1,19 +1,18 @@
 #include <iostream>
 #include "fstream"
 
-using namespace std;
 
 int main() {
-    cout << "Task 1" << endl;
+    std::cout << "Task 1" << std::endl;
 
-    ifstream data;
+    std::ifstream data;
     data.open("..\\words.txt");
 
-    string target;
+    std::string target;
     int count=0;
-    cout << "What we want to find?" << endl;
-    cin >> target;
-    string temp;
+    std::cout << "What we want to find?" << std::endl;
+    std::cin >> target;
+    std::string temp;
     while (!data.eof())
     {
         data >> temp;
@@ -21,7 +20,7 @@ int main() {
             count+=1;
     }
 
-    cout << "Target was find " << count << " times.";
+    std::cout << "Target was find " << count << " times.";
 
     return 0;
 }

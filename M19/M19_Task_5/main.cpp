@@ -2,15 +2,13 @@
 #include "fstream"
 #include "vector"
 
-using namespace std;
-
 void ques_disp(int ques_num)
 {
-    string path = "..\\game_data\\questions.txt";
-    string tmp;
-    vector<vector<string>>ques;
-    vector<string>temp;
-    ifstream data;
+    std::string path = "..\\game_data\\questions.txt";
+    std::string tmp;
+    std::vector<std::vector<std::string>>ques;
+    std::vector<std::string>temp;
+    std::ifstream data;
     data.open(path);
 
     while (!data.eof())
@@ -25,18 +23,18 @@ void ques_disp(int ques_num)
         tmp.clear();
     }
 
-    cout << "Your sector is: ";
+    std::cout << "Your sector is: ";
     for (int j=0; j<ques[ques_num-1].size(); j++)
-        cout << ques[ques_num-1][j] << " ";
-    cout << endl;
+        std::cout << ques[ques_num-1][j] << " ";
+    std::cout << std::endl;
 }
 
 bool check_ans(int s)
 {
-    string path = "..\\game_data\\answers.txt";
-    string ans, tmp;
-    vector <string>answers;
-    ifstream data;
+    std::string path = "..\\game_data\\answers.txt";
+    std::string ans, tmp;
+    std::vector <std::string>answers;
+    std::ifstream data;
     data.open(path);
     while (!data.eof())
     {
@@ -44,14 +42,14 @@ bool check_ans(int s)
         answers.push_back(tmp);
         tmp.clear();
     }
-    cout << "Enter your answer:" << endl;
-    cin >> ans;
+    std::cout << "Enter your answer:" << std::endl;
+    std::cin >> ans;
     if (ans==answers[s-1]) return true;
 
     return false;
 }
 
-int check_if_played(vector<int>v, int new_s)
+int check_if_played(std::vector<int>v, int new_s)
 {
     for (int i=0; i<v.size()-1;i++)
     {
@@ -66,17 +64,17 @@ int check_if_played(vector<int>v, int new_s)
 }
 
 int main() {
-    cout << "Task 5" << endl;
+    std::cout << "Task 5" << std::endl;
     int new_sector=1, offset=0;
     int connoisseurs_score=0, audience_score=0;
-    vector<int>played;
+    std::vector<int>played;
     for (int i=0;i<13;i++)
     {
-        cout << "Enter offset: (from 1 to 12)" << endl;
+        std::cout << "Enter offset: (from 1 to 12)" << std::endl;
         while (offset<1||offset>12)
         {
-            cin >> offset;
-            if (offset<1||offset>12) cout <<"Incorrect offset value. Try again please." << endl;
+            std::cin >> offset;
+            if (offset<1||offset>12) std::cout <<"Incorrect offset value. Try again please." << std::endl;
         }
         new_sector+=offset;
         if (new_sector>13) new_sector-=13;
@@ -93,9 +91,9 @@ int main() {
         offset=0;
     }
 
-    if (connoisseurs_score>audience_score) cout << "Znatoki WIN" << endl;
-    if (connoisseurs_score<audience_score) cout << "Telezriteli WIN" << endl;
-    if (connoisseurs_score==audience_score) cout << "Pobedila dryzhba" << endl;
+    if (connoisseurs_score>audience_score) std::cout << "Znatoki WIN" << std::endl;
+    if (connoisseurs_score<audience_score) std::cout << "Telezriteli WIN" << std::endl;
+    if (connoisseurs_score==audience_score) std::cout << "Pobedila dryzhba" << std::endl;
 
     return 0;
 }
