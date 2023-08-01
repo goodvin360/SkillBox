@@ -1,19 +1,18 @@
 #include <iostream>
 #include "fstream"
 
-using namespace std;
 
 int main() {
-    cout << "Cash machine" << endl;
+    std::cout << "Cash machine" << std::endl;
 
     int bills[5] = {100,200,500,1000,5000};
     int money[1000];
 
-    string operation;
-    cout << "Enter operation: " <<endl;
-    cin >> operation;
+    std::string operation;
+    std::cout << "Enter operation: " <<std::endl;
+    std::cin >> operation;
 
-    ifstream in("..\\money.bin", ios::binary);
+    std::ifstream in("..\\money.bin", std::ios::binary);
     if (in.is_open())
     {
         in.read((char*)money,sizeof (money));
@@ -34,19 +33,19 @@ int main() {
                 money[i] = bills[rand()%5];
             }
         }
-        ofstream out("..\\money.bin", ios::binary);
+        std::ofstream out("..\\money.bin", std::ios::binary);
         out.write((char*)money, sizeof (money));
         return 0;
     }
 
     else if (operation=="-")
     {
-        cout << "Amount:" <<endl;
+        std::cout << "Amount:" <<std::endl;
         int amount;
-        cin >> amount;
+        std::cin >> amount;
         if ((amount%100)!=0)
         {
-            cerr << "Invalid amount: " << amount << endl;
+            std::cerr << "Invalid amount: " << amount << std::endl;
             return 1;
         }
         int amount_to_collect = amount;
@@ -63,8 +62,8 @@ int main() {
                         amount_to_collect-=bill;
                         if (amount_to_collect==0)
                         {
-                            cout << "Amount taken: " << amount << endl;
-                            ofstream out("..\\money.bin", ios::binary);
+                            std::cout << "Amount taken: " << amount << std::endl;
+                            std::ofstream out("..\\money.bin", std::ios::binary);
                             out.write((char*)money, sizeof (money));
                             return 0;
                         }

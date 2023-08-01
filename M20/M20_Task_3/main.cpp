@@ -1,39 +1,38 @@
 #include <iostream>
 #include "fstream"
 
-using namespace std;
 
 int main() {
-    cout << "Fishing" << endl;
+    std::cout << "Fishing" << std::endl;
 
-    string fishes_path = "..\\river.txt";
-    ofstream haul ("..\\basket.txt", ios::app);
+    std::string fishes_path = "..\\river.txt";
+    std::ofstream haul ("..\\basket.txt", std::ios::app);
 
-    string temp, target, condition;
+    std::string temp, target, condition;
     int count = 0, fishing = 0;
 
     while (true)
     {
-        cout << "Enter fish type you want to catch: " << endl;
+        std::cout << "Enter fish type you want to catch: " << std::endl;
         fishing++;
-        cin >> target;
-        haul << "This is fishing number " << fishing << endl;
+        std::cin >> target;
+        haul << "This is fishing number " << fishing << std::endl;
 
-        ifstream fishes (fishes_path);
+        std::ifstream fishes (fishes_path);
         while (!fishes.eof())
         {
             fishes>>temp;
-            if (temp==target) {haul << target << endl; count++;}
+            if (temp==target) {haul << target << std::endl; count++;}
         }
         fishes.close();
 
-        haul << "Haul in the " << fishing << " fishing is " << count << endl;
+        haul << "Haul in the " << fishing << " fishing is " << count << std::endl;
         count=0;
-        cout << "Enter 'stop' if you want to exit, and 'next' if you want to continue." << endl;
-        cin >> condition; if (condition=="stop") break;
+        std::cout << "Enter 'stop' if you want to exit, and 'next' if you want to continue." << std::endl;
+        std::cin >> condition; if (condition=="stop") break;
     }
 
-    haul << endl << endl;
+    haul << std::endl << std::endl;
 
     return 0;
 }

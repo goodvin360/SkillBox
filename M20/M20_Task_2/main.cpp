@@ -2,16 +2,15 @@
 #include "fstream"
 #include "cstdlib"
 
-using namespace std;
 
 int main() {
-    cout << "Task 2" << endl;
+    std::cout << "Task 2" << std::endl;
 
     srand(time(nullptr));
-    ofstream data("..\\pic.txt", ios::out);
+    std::ofstream data("..\\pic.txt", std::ios::out);
     int height, wight, var;
-    cout << "enter 'height' and 'wight' of your picture: " << endl;
-    cin >> height >> wight;
+    std::cout << "enter 'height' and 'wight' of your picture: " << std::endl;
+    std::cin >> height >> wight;
 
     for (int i=0; i<height*wight; i++)
         {
