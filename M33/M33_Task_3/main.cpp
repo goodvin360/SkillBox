@@ -1,85 +1,126 @@
 #include <iostream>
+#include "variant"
+#include "map"
 #include "vector"
-#include "random"
+#include "string"
+#include "any"
 #include "sstream"
-#include "typeinfo"
 
-template<typename T1, typename T2>
-class MyClass
+struct PrintVisitor
 {
-
-public:
-    MyClass(){};
-
-    MyClass(T1 inKey, T2 inValue)
+    template<class T>
+    std::string operator()(T&& _in)
     {
-        key = inKey;
-        value = inValue;
+        std::stringstream a;
+        a << _in;
+        return a.str();
     }
-    T1 key;
-    T2 value;
-    std::vector<MyClass> myVec;
-
 };
 
-template<typename T>
-class MyClass2
+template<class... T>
+struct VariantContainer
 {
-private:
+public:
+    using value_type = std::variant<T...>;
 
 public:
-    std::vector<T> vec;
-    MyClass2() = default;
-//    MyClass var;
+    class Pair;
+    class Pair{
+    public:
+        value_type key;
+        value_type value;
+        Pair(value_type inKey, value_type inValue) : key(inKey), value(inValue){};
+        void PrintPair()
+        {
+            std::cout << std::visit(PrintVisitor{}, key) << " " << std::visit(PrintVisitor{},value) << std::endl;
+        }
+    };
+
+    std::vector<Pair> data;
+
+    template<typename T1, typename T2>
+    void Add(T1 const &_key, T2 const &_val)
+    {
+        auto p = Pair(_key, _val);
+        data.push_back(p);
+    }
+
+    template<typename T1>
+    std::vector<int> Find(T1 const &_key) {
+        T1 key;
+        std::vector<int> index;
+        for (int i = 0; i < data.size(); i++) {
+            auto p = data.at(i);
+            auto k = p.key;
+            if (std::get_if<T1>(&k)) {
+                key = *std::get_if<T1>(&k);
+                if (key == _key) {
+                    index.push_back(i);
+                }
+            }
+        }
+        return index;
+    }
+
+    template<typename T1>
+    void PrintFind(T1 const &_key){
+        auto v = Find(_key);
+        if(v.empty()){
+            std::cout<<std::endl <<"Key '"<< _key<<"' not found"<<std::endl;
+        }
+        else{
+            std::cout<<std::endl <<"Key '"<< _key<<"' found"<<std::endl;
+            for(auto it:v){
+                data.at(it).PrintPair();
+            }
+        }
+    }
+
+    template<typename T1>
+    void Remove(T1 const &_key){
+        auto v = Find(_key);
+        if(!v.empty()){
+            int i = 0;
+            std::cout<<std::endl <<"Key '"<< _key<<"' found"<<std::endl;
+            for(auto it:v){
+                data.erase(data.begin()+it-i);
+                i++;
+            }
+            std::cout <<"Key '"<< _key<<"' removed"<<std::endl;
+        }
+        else{
+            std::cout <<std::endl<<"Key '"<< _key<<"' not found"<<std::endl;
+        }
+    }
+
+    void Print()
+    {
+        for (auto it:data)
+        {
+            it.PrintPair();
+        }
+    }
 };
 
 
 int main() {
     std::cout << "Task 3" << std::endl;
 
-    MyClass<int,std::string> a;
+    VariantContainer<int, double, std::string> variantCollection;
 
-    for (int i=0; i<10; i++)
-    {
-        MyClass<int,std::string> tmp;
-        tmp.key = i;
-        tmp.value = "lalala";
-        a.myVec.push_back(tmp);
-    }
+    variantCollection.Add(6.0,"sdfsfsf");
+    variantCollection.Add("2",5);
+    variantCollection.Add(3,6.25);
+    variantCollection.Print();
 
-    for (int i=0; i<a.myVec.size(); i++)
-    {
-        std::cout << a.myVec[i].key << " " << a.myVec[i].value << std::endl;
-    }
+    auto v1 = variantCollection.Find(5.0);
+    variantCollection.PrintFind(6.0);
 
-    double rrr = 0;
-    MyClass<int,std::string> b;
+    variantCollection.Remove(6.0);
+    variantCollection.PrintFind(6.0);
 
-    MyClass2<MyClass<int,std::string>> p;
-    p.vec.push_back(a);
+    std::cout << std::endl;
 
     return 0;
 }
-
-/*#include <iostream>
-#include "vector"
-#include "random"
-#include "sstream"
-#include "map"
-#include "variant"
-
-
-template <typename T1, typename T2>
-struct Register
-{
-
-};
-
-int main() {
-    std::cout << "Task 3" << std::endl;
-
-    std::variant<int,double,std::string> var;
-
-    return 0;
-}*/
 
