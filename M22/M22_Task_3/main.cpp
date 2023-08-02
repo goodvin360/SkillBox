@@ -2,15 +2,14 @@
 #include <cstring>
 #include "map"
 
-using namespace std;
 
-bool checkAnagram(string a, string b)
+bool checkAnagram(std::string a, std::string b)
 {
     bool condition = false;
-    map<char, int> a_map, b_map;
+    std::map<char, int> a_map, b_map;
     for(int i=0; i<a.length(); i++){
         if(!a_map.count(a[i])){
-            a_map.insert(pair<char, int> (a[i], 1));
+            a_map.insert(std::pair<char, int> (a[i], 1));
         }
         else{
             a_map.find(a[i])->second++;
@@ -18,7 +17,7 @@ bool checkAnagram(string a, string b)
     }
     for(int i=0; i<b.length(); i++){
         if(!b_map.count(b[i])){
-            b_map.insert(pair<char,  int> (b[i], 1));
+            b_map.insert(std::pair<char,  int> (b[i], 1));
         }
         else{
             b_map.find(b[i])->second++;
@@ -30,19 +29,19 @@ bool checkAnagram(string a, string b)
 }
 
 int main() {
-    cout << "Task 3" << endl;
+    std::cout << "Task 3" << std::endl;
 
-    string a,b;
+    std::string a,b;
 
-    cout << "Enter first word: " << endl;
-    cin >> a;
-    cout << "Enter second word: " << endl;
-    cin >> b;
+    std::cout << "Enter first word: " << std::endl;
+    std::cin >> a;
+    std::cout << "Enter second word: " << std::endl;
+    std::cin >> b;
 
-    if (a.length()!=b.length()) cout << "This words have different length. They can't be an anagram.";
+    if (a.length()!=b.length()) std::cout << "This words have different length. They can't be an anagram.";
 
-    if (checkAnagram(a,b)) cout << "This is anagram" << endl;
-    else if (!checkAnagram(a,b)) cout << "This is not anagram.";
+    if (checkAnagram(a,b)) std::cout << "This is anagram" << std::endl;
+    else if (!checkAnagram(a,b)) std::cout << "This is not anagram.";
 
     return 0;
 }

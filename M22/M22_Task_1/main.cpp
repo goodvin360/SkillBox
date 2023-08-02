@@ -1,63 +1,62 @@
 #include <iostream>
 #include "map"
 
-using namespace std;
 
-map<string, string> addCustomer(map<string,string> dir)
+std::map<std::string, std::string> addCustomer(std::map<std::string,std::string> dir)
 {
-    string number, name;
-    cout << "Enter customer phone number (format: xx-xx-xx):" << endl;
-    cin >> number;
-    cout << "Enter customer second name: " << endl;
-    cin >> name;
-    dir.insert(pair<string, string>(number,name));
+    std::string number, name;
+    std::cout << "Enter customer phone number (format: xx-xx-xx):" << std::endl;
+    std::cin >> number;
+    std::cout << "Enter customer second name: " << std::endl;
+    std::cin >> name;
+    dir.insert(std::pair<std::string, std::string>(number,name));
     return dir;
 };
 
-void findCustomer(map<string,string> dir)
+void findCustomer(std::map<std::string,std::string> dir)
 {
-    string name;
-    cout << "Enter customer second name: " << endl;
-    cin >> name;
-    map<string,string>::iterator it;
+    std::string name;
+    std::cout << "Enter customer second name: " << std::endl;
+    std::cin >> name;
+    std::map<std::string,std::string>::iterator it;
     for (it=dir.begin(); it!=dir.end();it++)
     {
         if(name==it->second)
         {
-            cout << it->first << endl;
+            std::cout << it->first << std::endl;
             continue;
         }
-        if (it==dir.end()) cout << "There is no match." << endl;
+        if (it==dir.end()) std::cout << "There is no match." << std::endl;
     }
 };
 
-void findNumber(map<string,string> dir)
+void findNumber(std::map<std::string,std::string> dir)
 {
-    string number;
-    cout << "Enter customer phone number (format: xx-xx-xx):" << endl;
-    cin >> number;
-    map<string,string>::iterator it;
-    if(number==dir.find(number)->first) cout << dir.find(number)->second << endl;
-    else cout << "There is no match." << endl;
+    std::string number;
+    std::cout << "Enter customer phone number (format: xx-xx-xx):" << std::endl;
+    std::cin >> number;
+    std::map<std::string,std::string>::iterator it;
+    if(number==dir.find(number)->first) std::cout << dir.find(number)->second << std::endl;
+    else std::cout << "There is no match." << std::endl;
 };
 
 int main() {
-    cout << "Task 1" << endl;
+    std::cout << "Task 1" << std::endl;
 
-    map<string,string>directory;
+    std::map<std::string,std::string>directory;
 
     int command=0;
     bool condition = true;
     while (condition)
     {
-        cout << "Choose command: '1 - add new entry', '2 - find number by customer second name', '3 - find customer by number' " << endl;
-        cin >> command;
+        std::cout << "Choose command: '1 - add new entry', '2 - find number by customer second name', '3 - find customer by number' " << std::endl;
+        std::cin >> command;
         if (command==1) directory=addCustomer(directory);
         else if (command==2) findCustomer(directory);
         else if (command==3) findNumber(directory);
-        if (command<1||command>3) {cerr << "Input command error!"; return 1;}
-        cout << "If you want to continue, please enter '1'. If you want to stop, please enter '0'." << endl;
-        cin >> condition;
+        if (command<1||command>3) {std::cerr << "Input command error!"; return 1;}
+        std::cout << "If you want to continue, please enter '1'. If you want to stop, please enter '0'." << std::endl;
+        std::cin >> condition;
     }
 
     return 0;
