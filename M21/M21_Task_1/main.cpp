@@ -2,23 +2,22 @@
 #include "fstream"
 #include "vector"
 
-using namespace std;
 
 struct statement
 {
-    vector<string> fname;
-    vector<string> sname;
-    vector<string> date;
-    vector<double> payment;
+    std::vector<std::string> fname;
+    std::vector<std::string> sname;
+    std::vector<std::string> date;
+    std::vector<double> payment;
 };
 
-void list(ifstream& data, statement *info)
+void list(std::ifstream& data, statement *info)
 {
-    string tmp_fname,tmp_sname,tmp_date;
+    std::string tmp_fname,tmp_sname,tmp_date;
     double tmp_payment;
 
     if(!data.is_open()){
-        cerr << "File open error!" << endl;
+        std::cerr << "File open error!" << std::endl;
         exit(1);}
 
     info->fname.clear();
@@ -40,40 +39,40 @@ void list(ifstream& data, statement *info)
 
     for (int i=0; i<info->fname.size(); i++)
     {
-        cout << info->fname[i] << " " << info->sname[i] << " " << info->date[i] << " " << info->payment[i] << endl;
+        std::cout << info->fname[i] << " " << info->sname[i] << " " << info->date[i] << " " << info->payment[i] << std::endl;
     }
 }
 
-void add(ofstream& data, statement *info)
+void add(std::ofstream& data, statement *info)
 {
-    string tmp_fname,tmp_sname,tmp_date;
+    std::string tmp_fname,tmp_sname,tmp_date;
     double tmp_payment;
 
     if(!data.is_open()){
-        cerr << "File open error!" << endl;
+        std::cerr << "File open error!" << std::endl;
         exit(1);}
 
-    cout << "Enter first name, second name, date and payment value" << endl;
-    cin >> tmp_fname >> tmp_sname >> tmp_date >> tmp_payment;
-    data << tmp_fname << " " << tmp_sname << " "<< tmp_date << " " << tmp_payment << endl;
+    std::cout << "Enter first name, second name, date and payment value" << std::endl;
+    std::cin >> tmp_fname >> tmp_sname >> tmp_date >> tmp_payment;
+    data << tmp_fname << " " << tmp_sname << " "<< tmp_date << " " << tmp_payment << std::endl;
     data.close();
 }
 
 int main() {
-    cout << "Task 1" << endl;
-    string path = "..\\statement.txt";
+    std::cout << "Task 1" << std::endl;
+    std::string path = "..\\statement.txt";
 
     statement current_data;
-    string command;
+    std::string command;
     while (true)
     {
-        cout << "Choose option: 'list' or 'add'" << endl;
-        cin >> command;
-        if (command=="list") {ifstream data_read(path); list(data_read, &current_data);}
-        else if (command=="add") {ofstream data_add(path, ios::app); add(data_add, &current_data);}
+        std::cout << "Choose option: 'list' or 'add'" << std::endl;
+        std::cin >> command;
+        if (command=="list") {std::ifstream data_read(path); list(data_read, &current_data);}
+        else if (command=="add") {std::ofstream data_add(path, std::ios::app); add(data_add, &current_data);}
 
-        cout << "Enter 'stop' if you want finish, or 'next' if you want to continue" << endl;
-        cin >> command; if (command=="stop") break;
+        std::cout << "Enter 'stop' if you want finish, or 'next' if you want to continue" << std::endl;
+        std::cin >> command; if (command=="stop") break;
         command.clear();
     }
     return 0;
