@@ -1,4 +1,4 @@
-import QtQuick 2.15
+import QtQuick 2.12
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -24,14 +24,12 @@ Window {
             Layout.fillHeight: true
             Layout.fillWidth: true
 //            width: 400
-//            height: 200
-            anchors.right: parent.right
-            anchors.left: parent.left
+            height: 300
             visible: true
             Layout.columnSpan: 4
-                        Layout.rowSpan: 1
-                        Layout.row: 0
-                        Layout.column: 0
+            Layout.rowSpan: 1
+            Layout.row: 0
+            Layout.column: 0
         }
 
 
@@ -40,18 +38,16 @@ Window {
             id: name1
 //            text: qsTr("Play")
             font.pointSize: 24;
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 100
-            anchors.horizontalCenterOffset: -200
-            icon.width: 100
-                    icon.height: 100
-                    icon.color: "transparent"
-                    icon.source: "icons/play.PNG"
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            icon.height: Layout.preferredHeight
+            icon.width: Layout.preferredWidth
+            icon.color: "transparent"
+            icon.source: "icons/play.PNG"
             Layout.columnSpan: 1
-                        Layout.rowSpan: 1
-                        Layout.row: 2
-                        Layout.column: 1
+            Layout.rowSpan: 1
+            Layout.row: 1
+            Layout.column: 0
         }
 
         Button
@@ -59,18 +55,16 @@ Window {
             id: name2
 //            text: qsTr("Pause")
             font.pointSize: 24;
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 100
-            anchors.horizontalCenterOffset: -75
-            icon.width: 100
-                    icon.height: 100
-                    icon.color: "transparent"
-                    icon.source: "icons/pause.PNG"
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            icon.height: Layout.preferredHeight
+            icon.width: Layout.preferredWidth
+            icon.color: "transparent"
+            icon.source: "icons/pause.PNG"
             Layout.columnSpan: 1
                         Layout.rowSpan: 1
-                        Layout.row: 2
-                        Layout.column: 2
+                        Layout.row: 1
+                        Layout.column: 1
         }
 
         Button
@@ -78,18 +72,16 @@ Window {
             id: name3
 //            text: qsTr("Stop")
             font.pointSize: 24;
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 100
-            anchors.horizontalCenterOffset: 75
-            icon.width: 100
-                    icon.height: 100
-                    icon.color: "transparent"
-                    icon.source: "icons/stop.PNG"
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            icon.height: Layout.preferredHeight
+            icon.width: Layout.preferredWidth
+            icon.color: "transparent"
+            icon.source: "icons/stop.PNG"
             Layout.columnSpan: 1
-                        Layout.rowSpan: 1
-                        Layout.row: 2
-                        Layout.column: 3
+            Layout.rowSpan: 1
+            Layout.row: 1
+            Layout.column: 2
         }
 
         Button
@@ -97,32 +89,48 @@ Window {
             id: name4
 //            text: qsTr("Rewind")
             font.pointSize: 24;
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 100
-            anchors.horizontalCenterOffset: 200
-            icon.width: 100
-                    icon.height: 100
-                    icon.color: "transparent"
-                    icon.source: "icons/rewind.PNG"
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            icon.height: Layout.preferredHeight
+            icon.width: Layout.preferredWidth
+            icon.color: "transparent"
+            icon.source: "icons/rewind.PNG"
             Layout.columnSpan: 1
-                        Layout.rowSpan: 1
-                        Layout.row: 2
-                        Layout.column: 4
+            Layout.rowSpan: 1
+            Layout.row: 1
+            Layout.column: 3
         }
 
-        ProgressBar
-        {
+        ProgressBar {
+            id: control
             value: 0.5
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 200
-            anchors.right: parent.right
-            anchors.left: parent.left
+            padding: 2
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+
+            background: Rectangle {
+                implicitWidth: 200
+                implicitHeight: 16
+                color: "#e6e6e6"
+                radius: 3
+            }
+
+            contentItem: Item {
+                implicitWidth: 200
+                implicitHeight: 14
+
+                Rectangle {
+                    width: control.visualPosition * parent.width
+                    height: parent.height
+                    radius: 2
+                    color: "#17a81a"
+                }
+            }
+
             Layout.columnSpan: 4
-                        Layout.rowSpan: 1
-                        Layout.row: 3
-                        Layout.column: 1
+            Layout.rowSpan: 1
+            Layout.row: 2
+            Layout.column: 0
         }
 
     }
