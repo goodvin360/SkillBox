@@ -1,7 +1,6 @@
 #include "Screen.h"
 #include "iostream"
 
-using namespace std;
 
 void Screen::displayScreen()
 {
@@ -19,10 +18,10 @@ void Screen::displayScreen()
         for (int j=0; j<screenWight; j++)
         {
             if((i>=startY&&i<(startY+winHeight))&&(j>=startX&&j<(startX+winWight)))
-                cout << "1";
-            else cout << "0";
+                std::cout << "1";
+            else std::cout << "0";
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 }
 

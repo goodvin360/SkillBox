@@ -2,19 +2,18 @@
 #include "Screen.h"
 #include "Window.h"
 
-using namespace std;
 
 int main() {
-    cout << "Task 3" << endl;
+    std::cout << "Task 3" << std::endl;
 
     Screen*scr = new Screen;
 
-    string command;
+    std::string command;
 
     while (command!="close")
     {
-        cout << "Enter one of the next command: 'move', 'resize', 'display', 'close'" << endl;
-        cin>>command;
+        std::cout << "Enter one of the next command: 'move', 'resize', 'display', 'close'" << std::endl;
+        std::cin>>command;
 
         if (command=="move")
             scr->moveWindow();
@@ -23,7 +22,7 @@ int main() {
         else if (command=="display")
             scr->displayScreen();
         else if (command=="close")
-            cout << "Good bye! :) " << endl;
+            std::cout << "Good bye! :) " << std::endl;
     }
 
     delete scr;

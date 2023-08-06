@@ -5,18 +5,17 @@
 #include "ctime"
 #include "string"
 
-using namespace std;
 
 class Track
 {
-    string trackName;
+    std::string trackName;
     tm trackDate;
     int trackDuration;
 
 public:
-    void setTrackData(string name, tm date, int duration);
+    void setTrackData(std::string name, tm date, int duration);
     void ShowTrackInfo();
-    string getName();
+    std::string getName();
 };
 
 #endif //M26_TASK_1_TRACK_H

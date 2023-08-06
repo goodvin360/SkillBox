@@ -2,24 +2,23 @@
 #include "random"
 #include "Phone.h"
 
-using namespace std;
 
 int main() {
-    cout << "Task 2" << endl;
+    std::cout << "Task 2" << std::endl;
     srand(time(nullptr));
 
     Phone*ph=new Phone;
     ph->fillPhoneBook();
 
-    cout << "Your current phonebook:" << endl;
+    std::cout << "Your current phonebook:" << std::endl;
     ph->showPhoneBook();
 
-    string command;
+    std::string command;
 
     while (command!="exit")
     {
-        cout << "Enter one of the next command: 'add', 'call', 'sms', 'exit'" << endl;
-        cin>>command;
+        std::cout << "Enter one of the next command: 'add', 'call', 'sms', 'exit'" << std::endl;
+        std::cin>>command;
 
         if (command=="add")
             ph->addContact();
@@ -28,7 +27,7 @@ int main() {
         else if (command=="sms")
             ph->makeSMS();
         else if (command=="exit")
-            cout << "Good bye! :) " << endl;
+            std::cout << "Good bye! :) " << std::endl;
     }
 
     delete ph;

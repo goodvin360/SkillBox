@@ -5,21 +5,20 @@
 #include "vector"
 #include "Track.h"
 
-using namespace std;
 
 class Player
 {
-    vector <class Track> playlist;
+    std::vector <class Track> playlist;
     Track*track = new Track;
 
-    string status;
+    std::string status;
 
 public:
     void Play();
     void Pause();
     void Next();
     void Stop();
-    void Infill(string name, tm date, int duration);
+    void Infill(std::string name, tm date, int duration);
     void ShowPlaylist();
     void ShowInfo(int track_num);
 

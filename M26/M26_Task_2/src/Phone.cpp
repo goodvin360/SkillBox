@@ -2,54 +2,53 @@
 #include "sstream"
 #include "iostream"
 
-using namespace std;
 
 void Phone::makeCall()
 {
-    string var;
-    map<string,string>tmp_cont;
-    cout << "Enter contact name or number: " << endl;
-    cin >> var;
+    std::string var;
+    std::map<std::string,std::string>tmp_cont;
+    std::cout << "Enter contact name or number: " << std::endl;
+    std::cin >> var;
     if (var[0]=='+')
         tmp_cont=bk->getContact(var, "null");
     else
         tmp_cont=bk->getContact("null",var);
     if (tmp_cont.begin()->first==var||tmp_cont.begin()->second==var)
     {
-        cout << "Calling next contact: " << endl;
-        cout << tmp_cont.begin()->first << " " <<  tmp_cont.begin()->second << endl;
+        std::cout << "Calling next contact: " << std::endl;
+        std::cout << tmp_cont.begin()->first << " " <<  tmp_cont.begin()->second << std::endl;
     }
 }
 
 void Phone::makeSMS()
 {
-    string var;
-    string message;
-    map<string,string>tmp_cont;
-    cout << "Enter contact name or number: " << endl;
-    cin >> var;
+    std::string var;
+    std::string message;
+    std::map<std::string,std::string>tmp_cont;
+    std::cout << "Enter contact name or number: " << std::endl;
+    std::cin >> var;
     if (var[0]=='+')
         tmp_cont=bk->getContact(var, "null");
     else
         tmp_cont=bk->getContact("null",var);
     if (tmp_cont.begin()->first==var||tmp_cont.begin()->second==var)
     {
-        cout << "Enter your message:" << endl;
-        cin.ignore();
-        getline(cin,message);
-        cout << "To contact: " << endl;
-        cout << tmp_cont.begin()->first << " " <<  tmp_cont.begin()->second << endl;
-        cout << "Next message is send: " << endl << message << endl;
+        std::cout << "Enter your message:" << std::endl;
+        std::cin.ignore();
+        getline(std::cin,message);
+        std::cout << "To contact: " << std::endl;
+        std::cout << tmp_cont.begin()->first << " " <<  tmp_cont.begin()->second << std::endl;
+        std::cout << "Next message is send: " << std::endl << message << std::endl;
     }
 }
 
 void Phone::addContact()
 {
-    string number{}, name{};
-    cout << "Enter new contact number (format is +7XXXXXXXXXX):" << endl;
-    cin>>number;
-    cout << "Enter contact name:" << endl;
-    cin>>name;
+    std::string number{}, name{};
+    std::cout << "Enter new contact number (format is +7XXXXXXXXXX):" << std::endl;
+    std::cin>>number;
+    std::cout << "Enter contact name:" << std::endl;
+    std::cin>>name;
     bk->setContact(number, name);
 
     showPhoneBook();
@@ -57,20 +56,20 @@ void Phone::addContact()
 
 void Phone::showPhoneBook()
 {
-    map<string,string>tmp=bk->getContact();
+    std::map<std::string,std::string>tmp=bk->getContact();
     for (auto it = tmp.begin(); it!=tmp.end();it++)
     {
-        cout << it->first << " " << it->second << endl;
+        std::cout << it->first << " " << it->second << std::endl;
     }
 }
 
 void Phone::fillPhoneBook()
 {
-    string number, name;
+    std::string number, name;
 
     for (int i=0; i<5; i++)
     {
-        stringstream tmp1, tmp2;
+        std::stringstream tmp1, tmp2;
         tmp2 << "contact_" << i+1;
         name = tmp2.str();
         tmp2.clear();

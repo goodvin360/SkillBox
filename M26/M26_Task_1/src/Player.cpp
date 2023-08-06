@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "iostream"
 
-void Player::Infill(string name, tm date, int duration)
+void Player::Infill(std::string name, tm date, int duration)
 {
     track->setTrackData(name, date, duration);
     playlist.push_back(*track);
@@ -26,11 +26,11 @@ void Player::Play()
 {
     if (status!="playing")
     {
-        string name;
-        vector<string>track_names;
+        std::string name;
+        std::vector<std::string>track_names;
         bool check = false;
-        cout << "Enter track name you want to play:" << endl;
-        cin >> name;
+        std::cout << "Enter track name you want to play:" << std::endl;
+        std::cin >> name;
         for (int i=0; i<playlist.size(); i++)
         {
             track = &playlist[i];
@@ -39,7 +39,7 @@ void Player::Play()
             {ShowInfo(i);
                 check = true;}
             if (!check && i==playlist.size()-1)
-            {cout << "There is no track with this name." << endl;
+            {std::cout << "There is no track with this name." << std::endl;
                 return;}
         }
 
@@ -50,7 +50,7 @@ void Player::Play()
 void Player::Pause()
 {
     if (status=="playing")
-        cout << "Track on pause!" << endl;
+        std::cout << "Track on pause!" << std::endl;
     status = "on pause";
 }
 
@@ -65,6 +65,6 @@ void Player::Next()
 void Player::Stop()
 {
     if (status=="playing")
-        cout << "Playing is stopped." << endl;
+        std::cout << "Playing is stopped." << std::endl;
     status="stopped";
 }

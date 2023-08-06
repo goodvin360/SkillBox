@@ -1,49 +1,49 @@
 #include "Book.h"
 #include "iostream"
 
-map<string,string> Book::getContact(string number, string name)
+std::map<std::string,std::string> Book::getContact(std::string number, std::string name)
 {
     if (number=="null"&&name=="null")
         return phoneBook;
     else if (name=="null")
     {
-        map<string,string>tmp_cont;
+        std::map<std::string,std::string>tmp_cont;
         if (phoneBook.find(number)!=phoneBook.end())
         {auto it=phoneBook.find(number);
-            tmp_cont.insert(pair<string,string>(it->first,it->second));
+            tmp_cont.insert(std::pair<std::string,std::string>(it->first,it->second));
             return tmp_cont;}
         else
         {
-            cout << "There is no such contact in PhoneBook." << endl;
-            tmp_cont.insert(pair<string,string>("none","none"));
+            std::cout << "There is no such contact in PhoneBook." << std::endl;
+            tmp_cont.insert(std::pair<std::string,std::string>("none","none"));
             return tmp_cont;
         }
     }
     else if (number=="null")
     {
-        map<string,string>tmp_cont;
+        std::map<std::string,std::string>tmp_cont;
         bool check = false;
         for (auto it=phoneBook.begin(); it!=phoneBook.end();it++)
         {
             if(name==it->second)
             {
-                tmp_cont.insert(pair<string,string>(it->first,it->second));
+                tmp_cont.insert(std::pair<std::string,std::string>(it->first,it->second));
                 check = true;
                 return tmp_cont;
             }
         }
         if (!check)
         {
-            cout << "There is no such contact in PhoneBook." << endl;
-            tmp_cont.insert(pair<string,string>("none","none"));
+            std::cout << "There is no such contact in PhoneBook." << std::endl;
+            tmp_cont.insert(std::pair<std::string,std::string>("none","none"));
             return tmp_cont;
         }
     }
 }
 
-void Book::setContact(string number, string name)
+void Book::setContact(std::string number, std::string name)
 {
-    phoneBook.insert(pair<string, string> (number, name));
+    phoneBook.insert(std::pair<std::string, std::string> (number, name));
 
 
 }

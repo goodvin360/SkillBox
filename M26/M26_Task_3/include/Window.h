@@ -4,7 +4,6 @@
 #pragma once
 #include "vector"
 
-using namespace std;
 
 struct startPoint {int x=0; int y=0;};
 struct windowSize {int h=0; int w=0;};

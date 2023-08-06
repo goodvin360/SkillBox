@@ -11,10 +11,10 @@ void Track::setTrackData(std::string name, tm date, int duration)
 
 void Track::ShowTrackInfo()
 {
-    cout << "Track name: " << trackName << ", " << "Track date: " << put_time(&trackDate, "%Y/%m/%d") << ", " << " track duration: " << trackDuration << " s" << endl;
+    std::cout << "Track name: " << trackName << ", " << "Track date: " << std::put_time(&trackDate, "%Y/%m/%d") << ", " << " track duration: " << trackDuration << " s" << std::endl;
 }
 
-string Track::getName()
+std::string Track::getName()
 {
     return trackName;
 }

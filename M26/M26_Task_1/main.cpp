@@ -4,32 +4,30 @@
 #include "sstream"
 #include "random"
 
-using namespace std;
-
 
 int main() {
-    cout << "Task 1" << endl;
+    std::cout << "Task 1" << std::endl;
     srand(time(nullptr));
 
     Player*pl = new Player;
 
     for (int i=0; i<5; i++)
     {
-        stringstream track_name;
+        std::stringstream track_name;
         track_name << "track_no_" << i;
         time_t t = time(nullptr);
         tm date = *localtime(&t);
         pl->Infill(track_name.str(), date, rand()%100);
     }
 
-    cout << "This is your playlist: " << endl;
+    std::cout << "This is your playlist: " << std::endl;
     pl->ShowPlaylist();
 
-    string command;
+    std::string command;
     while (command!="exit")
     {
-        cout << "Enter one of the next command: 'play', 'pause', 'next', 'stop', exit'" << endl;
-        cin>>command;
+        std::cout << "Enter one of the next command: 'play', 'pause', 'next', 'stop', exit'" << std::endl;
+        std::cin>>command;
 
         if (command=="play")
             pl->Play();
@@ -40,7 +38,7 @@ int main() {
         else if (command=="stop")
             pl->Stop();
         else if (command=="exit")
-            cout << "Good bye! :) " << endl;
+            std::cout << "Good bye! :) " << std::endl;
     }
 
     delete pl;

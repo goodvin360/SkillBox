@@ -6,15 +6,14 @@
 #include "map"
 #include "string"
 
-using namespace std;
 
 class Book
 {
-    map<string, string>phoneBook;
+    std::map<std::string, std::string>phoneBook;
 
 public:
-    void setContact(string number, string name);
-    map<string,string> getContact(string number="null", string name="null");
+    void setContact(std::string number, std::string name);
+    std::map<std::string,std::string> getContact(std::string number="null", std::string name="null");
 };
 
 
