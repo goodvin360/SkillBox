@@ -3,23 +3,23 @@
 void Workers::infill()
 {
     int numOfTeams = 0;
-    cout << "Enter num of teams: " << endl;
-    cin >> numOfTeams;
+    std::cout << "Enter num of teams: " << std::endl;
+    std::cin >> numOfTeams;
     for (int i=1; i<=numOfTeams; i++)
     {
         Workers*midWorker = new Workers;
         midWorker->mids = this;
-        stringstream workerTempName;
+        std::stringstream workerTempName;
         workerTempName << i;
         midWorker->workerName=workerTempName.str();
         midWorker->workerID=stoi(midWorker->workerName);
-        cout << "Enter num of workers in " << i << " team:" << endl;
-        cin >> numOfWorkers;
+        std::cout << "Enter num of workers in " << i << " team:" << std::endl;
+        std::cin >> numOfWorkers;
         for (int j=1; j<=numOfWorkers; j++)
         {
             Workers*junWorker = new Workers;
             junWorker->mids=midWorker;
-            stringstream workerTempName;
+            std::stringstream workerTempName;
             workerTempName << i << j;
             junWorker->workerName=workerTempName.str();
             junWorker->workerID=stoi(junWorker->workerName);
@@ -40,9 +40,9 @@ void Workers::missionDist()
             int mission_value=0;
             do
             {
-                cout << "Enter mission value for " << i+1 << " team:" << endl;
-                cin >> mission_value;
-                if (mission_value==last_mission) cout << "This mission have been used. Enter another one." << endl;
+                std::cout << "Enter mission value for " << i+1 << " team:" << std::endl;
+                std::cin >> mission_value;
+                if (mission_value==last_mission) std::cout << "This mission have been used. Enter another one." << std::endl;
                 else if(mission_value!=last_mission) teams[i]->mission=mission_value;
             } while(last_mission==mission_value);
         }
@@ -103,12 +103,12 @@ void Workers::showTeams()
 {
     for (int i=0; i<teams.size(); i++)
     {
-        cout << "Middle worker ID: " << teams[i]->workerID <<
-             ", his mission: " << teams[i]->mission << endl;
+        std::cout << "Middle worker ID: " << teams[i]->workerID <<
+             ", his mission: " << teams[i]->mission << std::endl;
         for (int j=0; j<teams[i]->teams.size(); j++)
         {
-            cout << "Junior worker ID: " << teams[i]->teams[j]->workerID <<
-                 ", his task is: " << teams[i]->teams[j]->task << endl;
+            std::cout << "Junior worker ID: " << teams[i]->teams[j]->workerID <<
+                 ", his task is: " << teams[i]->teams[j]->task << std::endl;
         }
     }
 }

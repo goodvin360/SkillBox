@@ -4,7 +4,6 @@
 #pragma once
 #include "Figure.h"
 
-using namespace std;
 
 class Circle : public Figure
 {

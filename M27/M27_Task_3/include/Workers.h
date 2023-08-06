@@ -7,20 +7,19 @@
 #include "sstream"
 #include "random"
 
-using namespace std;
 
 class Workers
 {
     Workers*mids = nullptr;
-    vector<Workers*> teams;
+    std::vector<Workers*> teams;
     int numOfWorkers = 0;
     bool isNotBusy = true;
-    string task = "none";
+    std::string task = "none";
     int mission=0;
     int workerID;
     int numOfBusyWorkers=0;
-    string workerName;
-    vector<string> tasks = {"A","B","C"};
+    std::string workerName;
+    std::vector<std::string> tasks = {"A","B","C"};
 
 public:
     void infill();

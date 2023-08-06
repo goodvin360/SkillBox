@@ -5,7 +5,6 @@
 #include "iostream"
 #include "assert.h"
 
-using namespace std;
 
 enum colours {red=1, blue, green, magenta};
 
@@ -15,14 +14,14 @@ class Figure
 {
     center point;
     colours colour_type;
-    string colour;
+    std::string colour;
 
 
 public:
 
     void setCenter();
     void setColour();
-    string getColour();
+    std::string getColour();
     center getCenter();
     center a,b,c,d;
 };

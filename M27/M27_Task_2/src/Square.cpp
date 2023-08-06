@@ -4,8 +4,8 @@
 void Square::setSide()
 {
     double s;
-    cout << "Enter square side : " << endl;
-    cin >> s;
+    std::cout << "Enter square side : " << std::endl;
+    std::cin >> s;
     assert(s>=0);
     side = s;
 }
@@ -29,11 +29,11 @@ void Square::findFigure()
 
 void Square::showInfo()
 {
-    cout << "There is square with next parameters: " << endl;
-    cout << "Center point is: " << getCenter().x0 << " " << getCenter().y0 << endl;
-    cout << "Colour: " << getColour() << endl;
-    cout << "Area: " << findArea() << endl;
+    std::cout << "There is square with next parameters: " << std::endl;
+    std::cout << "Center point is: " << getCenter().x0 << " " << getCenter().y0 << std::endl;
+    std::cout << "Colour: " << getColour() << std::endl;
+    std::cout << "Area: " << findArea() << std::endl;
     findFigure();
-    cout << "Outer rectangle coordinates: a(" << a.x0 << ", " << a.y0 <<
-         "), b(" <<b.x0 << ", " <<b.y0 << "), c(" <<c.x0 << ", " <<c.y0 << "), d(" <<d.x0 << ", " <<d.y0 << ")" << endl;
+    std::cout << "Outer rectangle coordinates: a(" << a.x0 << ", " << a.y0 <<
+         "), b(" <<b.x0 << ", " <<b.y0 << "), c(" <<c.x0 << ", " <<c.y0 << "), d(" <<d.x0 << ", " <<d.y0 << ")" << std::endl;
 }

@@ -5,19 +5,18 @@
 #include "Triangle.h"
 #include "Rectangle.h"
 
-using namespace std;
 
 int main() {
-    cout << "Task 2" << endl;
+    std::cout << "Task 2" << std::endl;
     Circle*circle=new Circle;
     Square*square=new Square;
     Triangle*triangle=new Triangle;
     Rectangle*rectangle=new Rectangle;
 
-    string command;
+    std::string command;
 
-    cout << "Enter figure name: 'circle', 'square', 'triangle', 'rectangle': " << endl;
-    cin >> command;
+    std::cout << "Enter figure name: 'circle', 'square', 'triangle', 'rectangle': " << std::endl;
+    std::cin >> command;
 
     if (command=="circle")
     {

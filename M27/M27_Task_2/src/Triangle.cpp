@@ -4,8 +4,8 @@
 void Triangle::setSide()
 {
     double l;
-    cout << "Enter triangle side : " << endl;
-    cin >> l;
+    std::cout << "Enter triangle side : " << std::endl;
+    std::cin >> l;
     assert(l>=0);
     side = l;
 }
@@ -29,11 +29,11 @@ void Triangle::findFigure()
 
 void Triangle::showInfo()
 {
-    cout << "There is triangle with next parameters: " << endl;
-    cout << "Center point is: " << getCenter().x0 << " " << getCenter().y0 << endl;
-    cout << "Colour: " << getColour() << endl;
-    cout << "Area: " << findArea() << endl;
+    std::cout << "There is triangle with next parameters: " << std::endl;
+    std::cout << "Center point is: " << getCenter().x0 << " " << getCenter().y0 << std::endl;
+    std::cout << "Colour: " << getColour() << std::endl;
+    std::cout << "Area: " << findArea() << std::endl;
     findFigure();
-    cout << "Outer rectangle coordinates: a(" << a.x0 << ", " << a.y0 <<
-         "), b(" <<b.x0 << ", " <<b.y0 << "), c(" <<c.x0 << ", " <<c.y0 << "), d(" <<d.x0 << ", " <<d.y0 << ")" << endl;
+    std::cout << "Outer rectangle coordinates: a(" << a.x0 << ", " << a.y0 <<
+         "), b(" <<b.x0 << ", " <<b.y0 << "), c(" <<c.x0 << ", " <<c.y0 << "), d(" <<d.x0 << ", " <<d.y0 << ")" << std::endl;
 }

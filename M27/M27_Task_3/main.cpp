@@ -1,11 +1,9 @@
 #include <iostream>
 #include "Workers.h"
 
-using namespace std;
-
 
 int main() {
-    cout << "Task 3" << endl;
+    std::cout << "Task 3" << std::endl;
 
     Workers*teams = new Workers;
 
