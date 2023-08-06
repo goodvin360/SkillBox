@@ -1,19 +1,18 @@
 #include <iostream>
 #include "vector"
 
-using namespace std;
 
 class Talent
 {
 public:
-    virtual string Skill() = 0;
+    virtual std::string Skill() = 0;
 };
 
 class Swimming : virtual public Talent
 {
 public:
 
-    virtual string Skill()
+    virtual std::string Skill()
     {
         return "swim";
     }
@@ -23,7 +22,7 @@ class Dancing : virtual public Talent
 {
 public:
 
-    virtual string Skill()
+    virtual std::string Skill()
     {
         return "dance";
     }
@@ -33,7 +32,7 @@ class Counting : virtual public Talent
 {
 public:
 
-    virtual string Skill()
+    virtual std::string Skill()
     {
         return "count";
     }
@@ -41,19 +40,19 @@ public:
 
 class Dog
 {
-    string name;
-    vector<Talent*>talents;
+    std::string name;
+    std::vector<Talent*>talents;
 
 public:
     void showTalents()
     {
         if(!talents.empty())
         {
-            cout << "This is " << name << " and he has some talents:" << endl;
+            std::cout << "This is " << name << " and he has some talents:" << std::endl;
             for (int i=0; i<talents.size(); i++)
-                cout << "It can " << talents[i]->Skill() << endl;
+                std::cout << "It can " << talents[i]->Skill() << std::endl;
         }
-        else cout << "This is " << name << " and he doesn't have any talents :(" << endl;
+        else std::cout << "This is " << name << " and he doesn't have any talents :(" << std::endl;
     }
 
     virtual void setTalents(Talent*talent)
@@ -61,14 +60,14 @@ public:
         talents.push_back(talent);
     }
 
-    Dog(string inName):name(inName)
+    Dog(std::string inName):name(inName)
     {
 
     }
 };
 
 int main() {
-    cout << "Task 1" << endl;
+    std::cout << "Task 1" << std::endl;
 
     Dog dogo("Steve");
 
