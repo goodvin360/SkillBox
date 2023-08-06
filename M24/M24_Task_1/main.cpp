@@ -3,17 +3,16 @@
 #include "vector"
 #include "iomanip"
 
-using namespace std;
 
-void task_start(vector<string> &v1, string &task, time_t &start)
+void task_start(std::vector<std::string> &v1, std::string &task, time_t &start)
 {
-    cout << "Enter task name: " << endl;
-    getline(cin, task);
+    std::cout << "Enter task name: " << std::endl;
+    std::getline(std::cin, task);
     start=time(nullptr);
     v1.push_back(task);
 }
 
-void task_stop(vector<double> &v2, string &task, time_t &start, time_t &stop)
+void task_stop(std::vector<double> &v2, std::string &task, time_t &start, time_t &stop)
 {
     double diff;
     task.clear();
@@ -24,17 +23,17 @@ void task_stop(vector<double> &v2, string &task, time_t &start, time_t &stop)
 
 
 int main() {
-    cout << "Task 1" << endl;
+    std::cout << "Task 1" << std::endl;
 
-    string command{}, task{};
-    vector<string> task_list;
-    vector<double> duration;
+    std::string command{}, task{};
+    std::vector<std::string> task_list;
+    std::vector<double> duration;
     time_t start, stop;
 
     do {
-        cout << "Enter your command ('begin', 'end' or 'exit'): " << endl;
+        std::cout << "Enter your command ('begin', 'end' or 'exit'): " << std::endl;
 
-        getline(cin, command);
+        std::getline(std::cin, command);
 
         if (command == "begin")
         {
@@ -64,11 +63,11 @@ int main() {
 
             for (int i=0; i<k; i++)
             {
-                cout << "Task name: " << task_list[i] << ", and task duration in hours: " << setprecision(4) << fixed << duration[i]/3600 << endl;
+                std::cout << "Task name: " << task_list[i] << ", and task duration in hours: " << std::setprecision(4) << std::fixed << duration[i]/3600 << std::endl;
             }
             if (task.length()!=0)
             {
-                cout << "Current task name is: " << task << endl;
+                std::cout << "Current task name is: " << task << std::endl;
             }
         }
 
