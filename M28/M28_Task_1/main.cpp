@@ -4,21 +4,20 @@
 #include "vector"
 #include "map"
 
-using namespace std;
 
-mutex thisMutex;
+std::mutex thisMutex;
 
-map<int,string>result;
+std::map<int,std::string>result;
 
-void swimmer_dist(string name, double speed)
+void swimmer_dist(std::string name, double speed)
 {
     int time = 1;
     double dist = speed;
     do
-    {   this_thread::sleep_for(chrono::seconds(1));
+    {   std::this_thread::sleep_for(std::chrono::seconds(1));
         time++;
         thisMutex.lock();
-        cout << name << " swam " << dist << " meters" << endl;
+        std::cout << name << " swam " << dist << " meters" << std::endl;
         dist=time*speed;
         thisMutex.unlock();
     }  while (dist<=100);
@@ -28,27 +27,27 @@ void swimmer_dist(string name, double speed)
 }
 
 int main() {
-    cout << "Task 1" << endl;
+    std::cout << "Task 1" << std::endl;
 
-    vector<string> names;
-    vector<double>speeds;
+    std::vector<std::string> names;
+    std::vector<double>speeds;
     for (int i=0; i<6;i++)
     {
-        string name; double speed;
-        cout << "Enter " << i+1 << " swimmer name and his speed in m/s:" << endl;
-        cin >> name >> speed;
+        std::string name; double speed;
+        std::cout << "Enter " << i+1 << " swimmer name and his speed in m/s:" << std::endl;
+        std::cin >> name >> speed;
         names.push_back(name);
         speeds.push_back(speed);
     }
 
-    thread swimmer1(swimmer_dist, names[0], speeds[0]);
-    thread swimmer2(swimmer_dist, names[1], speeds[1]);
-    thread swimmer3(swimmer_dist, names[2], speeds[2]);
-    thread swimmer4(swimmer_dist, names[3], speeds[3]);
-    thread swimmer5(swimmer_dist, names[4], speeds[4]);
-    thread swimmer6(swimmer_dist, names[5], speeds[5]);
+    std::thread swimmer1(swimmer_dist, names[0], speeds[0]);
+    std::thread swimmer2(swimmer_dist, names[1], speeds[1]);
+    std::thread swimmer3(swimmer_dist, names[2], speeds[2]);
+    std::thread swimmer4(swimmer_dist, names[3], speeds[3]);
+    std::thread swimmer5(swimmer_dist, names[4], speeds[4]);
+    std::thread swimmer6(swimmer_dist, names[5], speeds[5]);
 
-    this_thread::sleep_for(chrono::seconds(2));
+    std::this_thread::sleep_for(std::chrono::seconds(2));
 
     swimmer1.join();
     swimmer2.join();
@@ -59,7 +58,7 @@ int main() {
 
     thisMutex.lock();
     for (auto it=result.begin(); it!=result.end(); it++)
-        cout << "Swimmer name: " << it->second << '\t' << " and his finish time: "<< it->first << " s" <<endl;
+        std::cout << "Swimmer name: " << it->second << '\t' << " and his finish time: "<< it->first << " s" << std::endl;
     thisMutex.unlock();
 
     return 0;

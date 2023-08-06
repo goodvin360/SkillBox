@@ -3,12 +3,10 @@
 #include "mutex"
 #include "random"
 
-using namespace std;
+std::mutex m;
 
-mutex m;
-
-vector<int>orders;
-vector<string>dishes;
+std::vector<int>orders;
+std::vector<std::string>dishes;
 int numOfDeliveries=0;
 int numOfOrdersToDeliver=0;
 int iter=0;
@@ -23,9 +21,9 @@ void courierDelivery()
             if (!dishes.empty())
             {
                 int t = 30;
-                this_thread::sleep_for(chrono::seconds(t));
+                std::this_thread::sleep_for(std::chrono::seconds(t));
 
-                string dish;
+                std::string dish;
                 m.lock();
                 if (!dishes.empty()) {
                     for (int i = 0; i < dishes.size(); i++) {
@@ -33,9 +31,9 @@ void courierDelivery()
                     }
                 }
                 numOfDeliveries++;
-                cout << "Delivery message: " << numOfOrdersToDeliver << " orders is delivered." << endl;
-                cout << "Delivery message: this is " << numOfDeliveries << " success delivery." << endl;
-                cout << endl;
+                std::cout << "Delivery message: " << numOfOrdersToDeliver << " orders is delivered." << std::endl;
+                std::cout << "Delivery message: this is " << numOfDeliveries << " success delivery." << std::endl;
+                std::cout << std::endl;
                 dishes.clear();
                 m.unlock();
             }
@@ -51,14 +49,14 @@ void kitchenRoom()
             {
                 int t = rand() % 15 + 5;
 //                int t = 1;
-                this_thread::sleep_for(chrono::seconds(t));
+                std::this_thread::sleep_for(std::chrono::seconds(t));
                 int order = 0;
                 m.lock();
                 if (!orders.empty())
                     order = orders[iter];
                 iter++;
                 m.unlock();
-                string dish;
+                std::string dish;
                 if (order == 1) dish = "pizza";
                 else if (order == 2) dish = "soup";
                 else if (order == 3) dish = "steak";
@@ -68,9 +66,9 @@ void kitchenRoom()
                 m.lock();
                 dishes.push_back(dish);
                 if (dish != "")
-                    cout << "Kitchen message: order num " << iter << " (" << dish << ") is cocked" << endl;
-                cout << "Kitchen message: " << dishes.size() << " orders is given to delivery" << endl;
-                cout << endl;
+                    std::cout << "Kitchen message: order num " << iter << " (" << dish << ") is cocked" << std::endl;
+                std::cout << "Kitchen message: " << dishes.size() << " orders is given to delivery" << std::endl;
+                std::cout << std::endl;
                 m.unlock();
             }
         }
@@ -83,18 +81,18 @@ void orderGenerator()
     {
         int t = rand()%10+5;
 //        int t = 1;
-        this_thread::sleep_for(chrono::seconds(t));
+        std::this_thread::sleep_for(std::chrono::seconds(t));
         int dish = rand()%5+1;
         m.lock();
-        cout << "Order number " << ++totalOrders << " is booked online." << endl;
-        string dish_name;
+        std::cout << "Order number " << ++totalOrders << " is booked online." << std::endl;
+        std::string dish_name;
         if (dish == 1) dish_name = "pizza";
         else if (dish == 2) dish_name = "soup";
         else if (dish == 3) dish_name = "steak";
         else if (dish == 4) dish_name = "salad";
         else if (dish == 5) dish_name = "sushi";
-        cout << "This is " << dish_name << endl;
-        cout << endl;
+        std::cout << "This is " << dish_name << std::endl;
+        std::cout << std::endl;
         orders.push_back(dish);
         m.unlock();
     }
@@ -103,13 +101,13 @@ void orderGenerator()
 
 
 int main() {
-    cout << "Task 3" << endl;
+    std::cout << "Task 3" << std::endl;
 
     srand(time(nullptr));
 
-    thread Orders(orderGenerator);
-    thread Kitchen(kitchenRoom);
-    thread Courier(courierDelivery);
+    std::thread Orders(orderGenerator);
+    std::thread Kitchen(kitchenRoom);
+    std::thread Courier(courierDelivery);
 
     Orders.join();
     Kitchen.join();
