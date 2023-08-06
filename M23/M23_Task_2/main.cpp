@@ -1,5 +1,4 @@
 #include <iostream>
-using namespace std;
 
 #define SPRING
 //#define SUMMER
@@ -7,18 +6,18 @@ using namespace std;
 //#define WINTER
 
 int main() {
-    cout << "Task 2" << endl;
+    std::cout << "Task 2" << std::endl;
     #ifdef SPRING
-        cout << "Spring"<<endl;
+        std::cout << "Spring"<<std::endl;
     #endif
     #ifdef SUMMER
-        cout << "Summer"<<endl;
+        std::cout << "Summer"<<std::endl;
     #endif
     #ifdef AUTUMN
-        cout << "Autumn"<<endl;
+        std::cout << "Autumn"<<std::endl;
     #endif
     #ifdef WINTER
-        cout << "Winter"<<endl;
+        std::cout << "Winter"<<std::endl;
     #endif
 
     return 0;

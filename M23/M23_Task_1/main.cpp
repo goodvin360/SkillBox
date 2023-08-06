@@ -3,15 +3,14 @@
 #define TMP(name) #name
 #define PRINT(name) std::cout << TMP(name)
 
-using namespace std;
 
 int main() {
-    cout << "Task 1" << endl;
+    std::cout << "Task 1" << std::endl;
 
     int num;
 
-    cout << "Enter day number: 1 - monday, 2 - tuesday, 3 - wednesday, 4 - thursday, 5 - friday, 6 - saturday, 7 - sunday" << endl;
-    cin >> num;
+    std::cout << "Enter day number: 1 - monday, 2 - tuesday, 3 - wednesday, 4 - thursday, 5 - friday, 6 - saturday, 7 - sunday" << std::endl;
+    std::cin >> num;
 
     if (num==1) PRINT(MONDAY);
     else if (num==2) PRINT(TUESDAY);
