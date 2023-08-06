@@ -1,50 +1,48 @@
 #include <iostream>
 #include "cpr/cpr.h"
 
-using namespace std;
-using namespace cpr;
 
 int main() {
-    cout << "Task 1" << endl;
+    std::cout << "Task 1" << std::endl;
 
-    Response r;
+    cpr::Response r;
 
-    string command{};
+    std::string command{};
     while(command!="exit")
     {
-        cout << "enter one of the next command: 'get', 'post', 'put', 'delete', 'patch' or 'exit': " << endl;
-        cin >> command;
+        std::cout << "enter one of the next command: 'get', 'post', 'put', 'delete', 'patch' or 'exit': " << std::endl;
+        std::cin >> command;
         if (command!="get"&&command!="post"&&command!="put"&&command!="delete"&&command!="patch"&&command!="exit")
         {
-            cout << "Wrong command. Try again." << endl;
+            std::cout << "Wrong command. Try again." << std::endl;
             continue;
         }
         if (command=="get")
         {
-            r = Get(Url("https://httpbin.org/get"));
-            cout << r.text;
+            r = Get(cpr::Url("https://httpbin.org/get"));
+            std::cout << r.text;
 
         }
         else if (command=="post")
         {
-            string name="Somebody", city="Somewhere";
-            r = Post(Url("https://httpbin.org/post"),Payload({{"name",name.c_str()},{"city", city.c_str()}}));
-            cout << r.text;
+            std::string name="Somebody", city="Somewhere";
+            r = Post(cpr::Url("https://httpbin.org/post"),cpr::Payload({{"name",name.c_str()},{"city", city.c_str()}}));
+            std::cout << r.text;
         }
         else if (command=="put")
         {
-            r = Put(Url("https://httpbin.org/put"));
-            cout << r.text;
+            r = Put(cpr::Url("https://httpbin.org/put"));
+            std::cout << r.text;
         }
         else if (command=="delete")
         {
-            r = Delete(Url("https://httpbin.org/delete"));
-            cout << r.text;
+            r = Delete(cpr::Url("https://httpbin.org/delete"));
+            std::cout << r.text;
         }
         else if (command=="patch")
         {
-            r = Patch(Url("https://httpbin.org/patch"));
-            cout << r.text;
+            r = Patch(cpr::Url("https://httpbin.org/patch"));
+            std::cout << r.text;
         }
     }
 

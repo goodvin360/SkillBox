@@ -4,48 +4,45 @@
 #include "cpr/cpr.h"
 
 
-using namespace std;
-using namespace cpr;
-
-void getRequest(Response &r,  map<string,string> &data)
+void getRequest(cpr::Response &r,  std::map<std::string,std::string> &data)
 {
-    stringstream url;
+    std::stringstream url;
     url << "https://httpbin.org/get?";
     for (auto it=data.begin(); it!=data.end(); it++)
     {
         url << it->first << "=" << it->second << "&";
     }
-    r = Get(Url(url.str()));
-    cout << r.text;
+    r = Get(cpr::Url(url.str()));
+    std::cout << r.text;
 //    data.clear();
 }
 
-void postRequest(Response &r,  map<string,string> &data)
+void postRequest(cpr::Response &r,  std::map<std::string,std::string> &data)
 {
-    vector<Pair> pairs;
+    std::vector<cpr::Pair> pairs;
     for (auto it=data.begin(); it!=data.end(); it++)
     {
-        Pair pair(it->first, it->second);
+        cpr::Pair pair(it->first, it->second);
         pairs.push_back(pair);
     }
 
-    r = Post(Url("https://httpbin.org/post"),
-                  Payload(pairs.begin(),pairs.end()));
-    cout << r.text;
+    r = Post(cpr::Url("https://httpbin.org/post"),
+             cpr::Payload(pairs.begin(),pairs.end()));
+    std::cout << r.text;
 //    data.clear();
 }
 
-void loadMap(Response &r, map<string,string> &data)
+void loadMap(cpr::Response &r, std::map<std::string,std::string> &data)
 {
-    string key, value;
+    std::string key, value;
     while (key!="exit")
     {
-        cout << "Enter key (or 'exit' for finish program) : " << endl;
-        cin >> key;
+        std::cout << "Enter key (or 'exit' for finish program) : " << std::endl;
+        std::cin >> key;
         if (key!="get"&&key!="post"&&key!="exit")
         {
-            cout << "Enter value: " << endl;
-            cin >> value;
+            std::cout << "Enter value: " << std::endl;
+            std::cin >> value;
             data.insert({key,value});
         }
         else if(key=="get")
@@ -64,9 +61,9 @@ void loadMap(Response &r, map<string,string> &data)
 }
 
 int main() {
-    cout << "Task 3" << endl;
+    std::cout << "Task 3" << std::endl;
 
-    map<string,string> data;
+    std::map<std::string,std::string> data;
 
     Response r;
 
