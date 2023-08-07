@@ -21,7 +21,7 @@ int main() {
         delta.tm_min=(int)(t*0.0167)%60;
         delta.tm_sec=t%60;
         std::cout <<delta.tm_min<<":"<<delta.tm_sec<<std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::seconds(1 ));
         t--;
     }
     std::cout << "DING! DING! DING!"<<std::endl;
