@@ -66,14 +66,14 @@ void fillJsonData(std::map<std::string,nlohmann::json> &movieLibData, std::vecto
 
 void fileWrite(nlohmann::json &lib)
 {
-    std::ofstream file("library.json", std::ios::out);
-    file << lib;
+    std::ofstream file("../library.json", std::ios::out);
+    file << std::setw(4) << lib << std::endl;
     file.close();
 }
 
 void searchActor()
 {
-    std::ifstream fileRead("library.json");
+    std::ifstream fileRead("../library.json");
     nlohmann::json libRead;
     fileRead >> libRead;
     std::cout << "Enter actor name:" << std::endl;

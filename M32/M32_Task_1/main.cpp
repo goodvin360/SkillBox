@@ -1,6 +1,6 @@
 #include <iostream>
 #include "fstream"
-#include "nlohmann/json.hpp"
+    #include "nlohmann/json.hpp"
 #include "map"
 
 struct Record
@@ -38,7 +38,7 @@ int main() {
     record.actors.insert({"role number 4", "actor number 4"});
 
 
-    std::ofstream file("record.json", std::ios::out);
+    std::ofstream file("../record.json", std::ios::out);
     nlohmann::json dict;
     dict["title"] = record.title;
     dict["country"] = record.country;
@@ -48,7 +48,7 @@ int main() {
     dict["director"] = record.director;
     dict["producer"] = record.producer;
     dict["actors"] = record.actors;
-    file << dict;
+    file << std::setw(4) << dict << std::endl;
 
     return 0;
 }
