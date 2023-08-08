@@ -65,7 +65,7 @@ int main() {
 
     std::map<std::string,std::string> data;
 
-    Response r;
+    cpr::Response r;
 
     loadMap(r,data);
 
