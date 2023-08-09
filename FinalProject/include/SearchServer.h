@@ -24,7 +24,7 @@ public:
 private:
     InvertedIndex index;
     std::map<std::string,int> uniqRequests;
-    std::map<int,int> preRelevance;
+    std::multimap<int,int> preRelevance;
     std::vector<std::vector<std::pair<int, float>>> result;
     std::vector<std::pair<int, float>> relativeIndex;
 

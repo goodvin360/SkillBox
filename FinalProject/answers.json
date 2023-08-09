@@ -4,12 +4,8 @@
             " result": true,
             "relevance": [
                 {
-                    "docID": 1,
-                    "rank": 1.0
-                },
-                {
                     "docID": 0,
-                    "rank": 0.5
+                    "rank": 1.0
                 }
             ]
         },
@@ -27,7 +23,21 @@
             ]
         },
         "request003": {
-            " result": false
+            " result": true,
+            "relevance": [
+                {
+                    "docID": 1,
+                    "rank": 1.0
+                },
+                {
+                    "docID": 0,
+                    "rank": 0.5
+                },
+                {
+                    "docID": 2,
+                    "rank": 0.25
+                }
+            ]
         }
     }
 }

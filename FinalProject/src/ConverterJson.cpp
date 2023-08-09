@@ -114,28 +114,7 @@ void ConverterJson::putAnswers(std::vector<std::vector<std::pair<int, float>>> a
                 }
             }
 
-/*            std::multimap<std::pair<std::string,int>,std::pair<std::string,double>> dataToOut;
-            int var = data.size();
-            for (int i=0; i<var;i++)
-            {
-                auto it2 = std::max_element(data.begin(), data.end());
-                dataToOut.insert(std::max_element(data.begin(), data.end()).operator*());
-                data.erase(it2);
-            }*/
-
-            std::vector<std::pair<std::pair<std::string,int>,std::pair<std::string,float>>> vecDataToOut;
-            int var = vecData.size();
-            for (int i=0; i<var;i++)
-            {
-                auto it2 = std::max_element(vecData.begin(), vecData.end());
-                vecDataToOut.push_back(std::max_element(vecData.begin(), vecData.end()).operator*());
-                vecData.erase(it2);
-            }
-
-//            std::cout << "lalal " << std::max_element(dataToOut.begin(), dataToOut.end())->second.second <<std::endl;
-
-
-            tmp["relevance"] = vecDataToOut;
+            tmp["relevance"] = vecData;
             data.clear();
             tmp2.clear();
             vecData.clear();
@@ -146,11 +125,8 @@ void ConverterJson::putAnswers(std::vector<std::vector<std::pair<int, float>>> a
         outerLayer.insert({request.str(),tmp});
     }
     answerFile["answers"] = outerLayer;
-    /*std::string toOut;
-    toOut = answerFile.dump(1,'\t');*/
     file.precision(4);
     file << std::setw(4) << answerFile << std::endl;
-//    file << answerFile << std::endl;
 
 }
 

@@ -13,9 +13,9 @@ void JsonFill::fillFile(std::string type)
     }
     else if(type=="request")
     {
-        requestExample.requests.push_back("milk sugar ");
+        requestExample.requests.push_back("the sugar ");
         requestExample.requests.push_back("a milk b c");
-        requestExample.requests.push_back("pupper");
+        requestExample.requests.push_back("It pepper salt milk number one saw");
     }
 }
 

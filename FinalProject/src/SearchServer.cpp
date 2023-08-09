@@ -69,7 +69,24 @@ std::vector<std::vector<std::pair<int, float>>> SearchServer::searchFoo(const st
 
 //        std::cout << "current max abs relevance: " << maxAbsRelevance << std::endl;
 
-        for (auto it=preRelevance.begin(); it!=preRelevance.end(); it++)
+        std::multimap<int, int> reverseMyMap;
+        for (auto it : preRelevance)
+        {
+            reverseMyMap.insert({it.second,it.first});
+        }
+
+        for (std::multimap<int, int>::reverse_iterator it=reverseMyMap.rbegin(); it!=reverseMyMap.rend(); it++)
+        {
+            std::pair<int,float> tempIndex;
+            tempIndex.first = it->second;
+            if (maxAbsRelevance!=0)
+                tempIndex.second = floorf(100*(float)(it->first)/maxAbsRelevance)/100;
+            else tempIndex.second = 0;
+//            if (tempIndex.second!=0)
+            relativeIndex.push_back(tempIndex);
+        }
+
+/*        for (auto it=preRelevance.begin(); it!=preRelevance.end(); it++)
         {
             std::pair<int,float> tempIndex;
             tempIndex.first = it->first;
@@ -78,7 +95,7 @@ std::vector<std::vector<std::pair<int, float>>> SearchServer::searchFoo(const st
             else tempIndex.second = 0;
 //            if (tempIndex.second!=0)
                 relativeIndex.push_back(tempIndex);
-        }
+        }*/
 
 
 
