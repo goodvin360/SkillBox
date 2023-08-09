@@ -9,8 +9,6 @@
 #include "string"
 #include "sstream"
 #include "map"
-#include <unordered_map>
-#include "iomanip"
 
 struct Answer
 {
@@ -21,22 +19,16 @@ struct Answer
 
 class ConverterJson
 {
-private:
-
-    std::vector<std::string> textFromDocs{};
-    int respLimit=0;
-    std::vector<std::string> requests{};
-    std::vector<std::string> filePaths;
-
-    nlohmann::json configFile;
-    nlohmann::json requestFile;
-    nlohmann::json answerFile;
-    Answer ans;
-
 public:
     ConverterJson()
     {
         std::ifstream configRead("../config.json");
+        if(!configRead.is_open())
+        {
+            std::cerr << "Error while opening file config.json."<<std::endl;
+            std::terminate();
+            //to do exception throw
+        }
         configRead >> configFile;
         configRead.close();
 
@@ -44,6 +36,7 @@ public:
         requestRead >> requestFile;
         requestRead.close();
     };
+
     std::vector<std::string> GetTextDocuments();
     int GetFilesNum();
     int GetResponseLimit();
@@ -51,6 +44,18 @@ public:
     void putAnswers(std::vector<std::vector<std::pair<int, float>>> answers);
     const std::vector<std::string> GetRequestsData();
 
+
+private:
+    int numOfFiles=0;
+    int respLimit=0;
+    std::vector<std::string> textFromDocs{};
+    std::vector<std::string> requests{};
+    std::vector<std::string> filePaths;
+
+    nlohmann::json configFile;
+    nlohmann::json requestFile;
+    nlohmann::json answerFile;
+    Answer ans;
 };
 
 #endif //FINALPROJECT_CONVERTERJSON_H

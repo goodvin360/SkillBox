@@ -6,23 +6,18 @@
 #include "iostream"
 #include "map"
 #include "InvertedIndex.h"
-
-struct RelativeIndex
-{
-    size_t doc_id;
-    double rank;
-};
+#include "ConverterJson.h"
 
 class SearchServer
 {
 public:
-    SearchServer(InvertedIndex& inIdx): index(inIdx) {};
+    SearchServer(InvertedIndex& inIdx, ConverterJson &inJson): index(inIdx), dataJson(inJson) {};
 
     std::vector<std::vector<std::pair<int, float>>> searchFoo (const std::vector<std::string> &queries_input);
-    void testFoo();
 
 private:
     InvertedIndex index;
+    ConverterJson dataJson;
     std::map<std::string,int> uniqRequests;
     std::multimap<int,int> preRelevance;
     std::vector<std::vector<std::pair<int, float>>> result;

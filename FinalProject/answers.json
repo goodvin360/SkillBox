@@ -2,12 +2,8 @@
     "answers": {
         "request001": {
             " result": true,
-            "relevance": [
-                {
-                    "docID": 0,
-                    "rank": 1.0
-                }
-            ]
+            "docID": 0,
+            "rank": 1.0
         },
         "request002": {
             " result": true,

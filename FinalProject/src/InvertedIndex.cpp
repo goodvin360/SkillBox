@@ -1,14 +1,10 @@
 #include "InvertedIndex.h"
 
-/*void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs)
+void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs)
 {
     docs = input_docs;
-}*/
-
-void InvertedIndex::UpdateDocumentBase()
-{
-    docs = jsonData.GetTextDocuments();
-/*    for (auto it2:docs)
+    freqDictionaryInfill();
+    /*    for (auto it2:docs)
     {
         std::cout << it2 << std::endl;
         std::cout << std::endl;
@@ -82,7 +78,8 @@ void InvertedIndex::freqDictionaryInfill()
     }*/
 }
 
-std::map<std::string, std::vector<Entry>> InvertedIndex::getFreqDictionary()
+std::map<std::string, std::vector<Entry>> *InvertedIndex::getFreqDictionary()
 {
-    return freq_dictionary;
+    return &freq_dictionary;
 }
+

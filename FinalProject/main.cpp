@@ -3,9 +3,8 @@
 #include "ConverterJson.h"
 #include "InvertedIndex.h"
 #include "SearchServer.h"
-#include "SearchServer.h"
-#include "fstream"
-#include "sstream"
+#include "thread"
+
 
 void showDocs()
 {
@@ -37,22 +36,17 @@ void createJsons()
 
 int main() {
 
-    createJsons();
+//    createJsons();
 //    showDocs();
 
     ConverterJson conv;
     conv.GetResponseLimit();
-    conv.GetTextDocuments();
     conv.GetRequests();
-    InvertedIndex inv;
-    inv.UpdateDocumentBase();
-    inv.freqDictionaryInfill();
+    InvertedIndex inv(conv);
+    inv.UpdateDocumentBase(conv.GetTextDocuments());
+    SearchServer serv(inv, conv);
+    conv.putAnswers(serv.searchFoo(conv.GetRequestsData()));
 
-    SearchServer ss(inv);
-    conv.putAnswers(ss.searchFoo(conv.GetRequestsData()));
-
-//    ss.testFoo();
-
-
+    std::cout << "Program finished. Good luck :) " << std::endl;
     return 0;
 }

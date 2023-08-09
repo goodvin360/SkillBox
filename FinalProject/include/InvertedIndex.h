@@ -17,20 +17,17 @@ struct Entry
 class InvertedIndex
 {
 public:
-    InvertedIndex() = default;
+    InvertedIndex(ConverterJson &inJson): jsonData(inJson) {};
 
-//    void UpdateDocumentBase(std::vector<std::string> input_docs);
-    void UpdateDocumentBase();
+    void UpdateDocumentBase(std::vector<std::string> input_docs);
     std::vector<Entry> GetWordCount (const std::string &word);
     void freqDictionaryInfill();
-    std::map<std::string, std::vector<Entry>> getFreqDictionary();
-
-    std::vector<std::string> docs;
-    std::map<std::string, std::vector<Entry>> freq_dictionary;
-    ConverterJson jsonData;
+    std::map<std::string, std::vector<Entry>>* getFreqDictionary();
 
 private:
-
+    std::map<std::string, std::vector<Entry>> freq_dictionary;
+    std::vector<std::string> docs;
+    ConverterJson jsonData;
 };
 
 
