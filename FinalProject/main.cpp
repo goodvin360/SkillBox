@@ -1,6 +1,9 @@
 #include <iostream>
 #include "JsonFill.h"
 #include "ConverterJson.h"
+#include "InvertedIndex.h"
+#include "SearchServer.h"
+#include "SearchServer.h"
 #include "fstream"
 #include "sstream"
 
@@ -41,6 +44,15 @@ int main() {
     conv.GetResponseLimit();
     conv.GetTextDocuments();
     conv.GetRequests();
+    InvertedIndex inv;
+    inv.UpdateDocumentBase();
+    inv.freqDictionaryInfill();
+
+    SearchServer ss(inv);
+    conv.putAnswers(ss.searchFoo(conv.GetRequestsData()));
+
+//    ss.testFoo();
+
 
     return 0;
 }

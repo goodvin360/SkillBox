@@ -7,6 +7,17 @@
 #include "fstream"
 #include "iostream"
 #include "string"
+#include "sstream"
+#include "map"
+#include <unordered_map>
+#include "iomanip"
+
+struct Answer
+{
+    std::string requestNum;
+    std::map<int, double> result;
+    bool flag;
+};
 
 class ConverterJson
 {
@@ -19,6 +30,8 @@ private:
 
     nlohmann::json configFile;
     nlohmann::json requestFile;
+    nlohmann::json answerFile;
+    Answer ans;
 
 public:
     ConverterJson()
@@ -32,9 +45,11 @@ public:
         requestRead.close();
     };
     std::vector<std::string> GetTextDocuments();
+    int GetFilesNum();
     int GetResponseLimit();
     std::vector<std::string> GetRequests();
     void putAnswers(std::vector<std::vector<std::pair<int, float>>> answers);
+    const std::vector<std::string> GetRequestsData();
 
 };
 

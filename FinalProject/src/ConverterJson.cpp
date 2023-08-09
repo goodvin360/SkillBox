@@ -71,5 +71,94 @@ std::vector<std::string> ConverterJson::GetRequests()
 
 void ConverterJson::putAnswers(std::vector<std::vector<std::pair<int, float>>> answers)
 {
+    std::ofstream file("../answers.json", std::ios::out);
+    file.precision(4);
+    std::map<std::string,nlohmann::json> outerLayer;
+    std::multimap<std::pair<std::string,int>,std::pair<std::string,float>> data;
+    std::vector<std::pair<std::pair<std::string,int>,std::pair<std::string,float>>> vecData;
+    for (int i=0; i<answers.size(); i++)
+    {
+        float var=0;
+        for (int j=0; j<answers[i].size();j++)
+        {
+            var+=answers[i][j].second;
+        }
+        std::cout << var << std::endl;
+        if (var>0)
+            ans.flag = true;
+        else ans.flag = false;
 
+        nlohmann::json tmp;
+        tmp[" result"] = ans.flag;
+
+        if (ans.flag)
+        {
+            nlohmann::json tmp2;
+            for (int j = 0; j < answers[i].size(); j++)
+            {
+                if (answers[i][j].second>0)
+                {
+                    constexpr auto max_digits10 = std::numeric_limits<decltype(answers[i][j].second)>::max_digits10;
+                    std::setprecision(max_digits10);
+                    std::pair<std::string, int> pair1;
+                    std::pair<std::string, float> pair2;
+                    pair1.first = "docID";
+                    pair1.second = answers[i][j].first;
+                    pair2.first = "rank";
+                    pair2.second = answers[i][j].second;
+                    data.insert(std::make_pair(pair1, pair2));
+                    vecData.push_back(std::make_pair(pair1, pair2));
+
+                    tmp2["docID"] = answers[i][j].first;
+                    tmp2["rank"] = answers[i][j].second;
+                }
+            }
+
+/*            std::multimap<std::pair<std::string,int>,std::pair<std::string,double>> dataToOut;
+            int var = data.size();
+            for (int i=0; i<var;i++)
+            {
+                auto it2 = std::max_element(data.begin(), data.end());
+                dataToOut.insert(std::max_element(data.begin(), data.end()).operator*());
+                data.erase(it2);
+            }*/
+
+            std::vector<std::pair<std::pair<std::string,int>,std::pair<std::string,float>>> vecDataToOut;
+            int var = vecData.size();
+            for (int i=0; i<var;i++)
+            {
+                auto it2 = std::max_element(vecData.begin(), vecData.end());
+                vecDataToOut.push_back(std::max_element(vecData.begin(), vecData.end()).operator*());
+                vecData.erase(it2);
+            }
+
+//            std::cout << "lalal " << std::max_element(dataToOut.begin(), dataToOut.end())->second.second <<std::endl;
+
+
+            tmp["relevance"] = vecDataToOut;
+            data.clear();
+            tmp2.clear();
+            vecData.clear();
+        }
+
+        std::stringstream request;
+        request << "request00" << i+1;
+        outerLayer.insert({request.str(),tmp});
+    }
+    answerFile["answers"] = outerLayer;
+    /*std::string toOut;
+    toOut = answerFile.dump(1,'\t');*/
+    file.precision(4);
+    file << std::setw(4) << answerFile << std::endl;
+//    file << answerFile << std::endl;
+
+}
+
+const std::vector<std::string> ConverterJson::GetRequestsData()
+{
+    return requests;
+}
+
+int ConverterJson::GetFilesNum() {
+    return textFromDocs.size();
 }

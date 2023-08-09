@@ -13,9 +13,9 @@ void JsonFill::fillFile(std::string type)
     }
     else if(type=="request")
     {
-        requestExample.requests.push_back("word1 word2 word3");
-        requestExample.requests.push_back("word1 word2 word3");
-        requestExample.requests.push_back("word1 word2 word3");
+        requestExample.requests.push_back("milk sugar ");
+        requestExample.requests.push_back("a milk b c");
+        requestExample.requests.push_back("pupper");
     }
 }
 
