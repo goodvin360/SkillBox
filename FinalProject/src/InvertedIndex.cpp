@@ -6,6 +6,7 @@ std::mutex myMutex;
 void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs)
 {
     docs = input_docs;
+
 //    freqDictionaryInfill();
 
 //    for (auto it:docs)
@@ -16,28 +17,6 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs)
         std::cout << it2 << std::endl;
         std::cout << std::endl;
     }*/
-
-    std::vector<std::thread> ThreadVector;
-    for (auto it: docs)
-    {
-        ThreadVector.emplace_back([&]()
-        {
-                freqDictInfillThread(it);
-        });
-
-        std::this_thread::sleep_for(std::chrono::milliseconds (1));
-/*        std::thread th([&](){freqDictInfillThread(it);});
-        std::this_thread::sleep_for(std::chrono::milliseconds(0));
-        th.join();*/
-    }
-
-
-
-    for(auto& t: ThreadVector)
-    {
-        std::cout << "This is call to join() for worker thread number: " << t.get_id() << std::endl;
-        t.join();
-    }
 
 }
 
@@ -108,21 +87,31 @@ void InvertedIndex::freqDictionaryInfill()
     }*/
 }
 
+void InvertedIndex::dataMerge()
+{
+    for (auto it:classParts)
+    {
+        for (auto it2 = it.freq_dictionary.begin(); it2!=it.freq_dictionary.end(); it2++)
+        {
+//            std::cout << it2->first << std::endl;
+            freq_dictionary.insert({it2->first,it2->second});
+        }
+    }
+}
+
 void InvertedIndex::freqDictInfillThread(std::string &textFromDoc)
 {
-
     myMutex.lock();
-    std::cout << "This is " << std::this_thread::get_id() << " thread." << std::endl;
-    std::string data = textFromDoc;
+    std::cout << "This is thread number: " << std::this_thread::get_id() << std::endl;
         int i=0;
         std::string test;
-        while (data[i])
+        while (textFromDoc[i])
         {
-            if (data[i]!=' ' && data[i]!='\0')
+            if (textFromDoc[i]!=' ' && textFromDoc[i]!='\0')
             {
-                test.push_back(data[i]);
+                test.push_back(textFromDoc[i]);
             }
-            if ((data[i]==' ' || data[i+1]=='\0') && test.size()!=0)
+            if ((textFromDoc[i]==' ' || textFromDoc[i+1]=='\0') && test.size()!=0)
             {
                 freq_dictionary.insert({test, GetWordCount(test)});
                 /*std::cout << test << '\t';
@@ -138,5 +127,33 @@ std::map<std::string, std::vector<Entry>> *InvertedIndex::getFreqDictionary()
 {
     return &freq_dictionary;
 }
+
+void InvertedIndex::threadsDistribution()
+{
+    for (auto it:docs)
+    {
+        InvertedIndex tempPart(jsonData);
+        tempPart.UpdateDocumentBase(jsonData.GetTextDocuments());
+        classParts.push_back(tempPart);
+    }
+
+    std::vector<std::thread> ThreadVector;
+
+    for (int i = 0; i < classParts.size(); i++) {
+        ThreadVector.emplace_back([&, i]() {
+            classParts[i].freqDictInfillThread(docs[i]);
+        });
+    }
+
+    for(auto& t: ThreadVector)
+    {
+        t.join();
+    }
+
+    dataMerge();
+
+}
+
+
 
 

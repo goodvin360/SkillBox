@@ -8,7 +8,7 @@
 #include "thread"
 #include "mutex"
 #include "ConverterJson.h"
-#include "pthread.h"
+
 struct Entry
 {
     size_t doc_id, count;
@@ -23,14 +23,16 @@ public:
     std::vector<Entry> GetWordCount (const std::string &word);
     void freqDictionaryInfill();
     void freqDictInfillThread(std::string &textFromDoc);
+    void dataMerge();
+    void threadsDistribution();
     std::map<std::string, std::vector<Entry>>* getFreqDictionary();
-    int pthread_mutex_init(pthread_mutex_t *mp, const pthread_mutexattr_t *mattr);
 
 private:
     std::map<std::string, std::vector<Entry>> freq_dictionary;
     std::vector<std::string> docs;
     ConverterJson jsonData;
-
+    std::vector<std::string> threads;
+    std::vector<InvertedIndex>classParts;
 };
 
 
