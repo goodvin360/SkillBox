@@ -1,6 +1,9 @@
 #ifndef FINALPROJECT_INVERTEDINDEX_H
 #define FINALPROJECT_INVERTEDINDEX_H
 
+#define MultiThread
+//#define SingleThread
+
 #pragma once
 #include "vector"
 #include "iostream"
@@ -34,7 +37,6 @@ private:
     std::vector<std::string> threads;
     std::vector<InvertedIndex>classParts;
 };
-
 
 
 #endif //FINALPROJECT_INVERTEDINDEX_H

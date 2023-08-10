@@ -7,17 +7,12 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs)
 {
     docs = input_docs;
 
-//    freqDictionaryInfill();
-
-//    for (auto it:docs)
-//        freqDictInfillThread(it);
-
 /*        for (auto it2:docs)
     {
         std::cout << it2 << std::endl;
         std::cout << std::endl;
-    }*/
-
+    }
+    */
 }
 
 std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word)
@@ -53,56 +48,11 @@ std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word)
     return wordData;
 }
 
-void InvertedIndex::freqDictionaryInfill()
-{
-    for (int i=0; i<docs.size(); i++)
-    {
-        int j=0;
-        std::string test;
-        while (docs[i][j])
-        {
-            if (docs[i][j]!=' ' && docs[i][j]!='\0')
-            {
-                test.push_back(docs[i][j]);
-            }
-            if ((docs[i][j]==' ' || docs[i][j+1]=='\0') && test.size()!=0)
-            {
-                freq_dictionary.insert({test, GetWordCount(test)});
-                /*std::cout << test << '\t';
-                std::cout << std::endl;*/
-                test.clear();
-            }
-            j++;
-        }
-    }
-
-/*    for (auto it=freq_dictionary.begin();it!=freq_dictionary.end();it++)
-    {
-        std::cout << it->first << std::endl;
-        for (int i=0; i<it->second.size();i++)
-        {
-            std::cout << it->second[i].doc_id << " " << it->second[i].count << std::endl;
-        }
-        std::cout << std::endl;
-    }*/
-}
-
-void InvertedIndex::dataMerge()
-{
-    for (auto it:classParts)
-    {
-        for (auto it2 = it.freq_dictionary.begin(); it2!=it.freq_dictionary.end(); it2++)
-        {
-//            std::cout << it2->first << std::endl;
-            freq_dictionary.insert({it2->first,it2->second});
-        }
-    }
-}
-
 void InvertedIndex::freqDictInfillThread(std::string &textFromDoc)
 {
     myMutex.lock();
     std::cout << "This is thread number: " << std::this_thread::get_id() << std::endl;
+    myMutex.unlock();
         int i=0;
         std::string test;
         while (textFromDoc[i])
@@ -120,7 +70,18 @@ void InvertedIndex::freqDictInfillThread(std::string &textFromDoc)
             }
             i++;
         }
-    myMutex.unlock();
+}
+
+void InvertedIndex::dataMerge()
+{
+    for (auto it:classParts)
+    {
+        for (auto it2 = it.freq_dictionary.begin(); it2!=it.freq_dictionary.end(); it2++)
+        {
+//            std::cout << it2->first << std::endl;
+            freq_dictionary.insert({it2->first,it2->second});
+        }
+    }
 }
 
 std::map<std::string, std::vector<Entry>> *InvertedIndex::getFreqDictionary()
@@ -137,8 +98,15 @@ void InvertedIndex::threadsDistribution()
         classParts.push_back(tempPart);
     }
 
-    std::vector<std::thread> ThreadVector;
+#ifdef SingleThread
+    for (int i = 0; i < classParts.size(); i++)
+    {
+        classParts[i].freqDictInfillThread(docs[i]);
+    }
+#endif
 
+#ifdef MultiThread
+    std::vector<std::thread> ThreadVector;
     for (int i = 0; i < classParts.size(); i++) {
         ThreadVector.emplace_back([&, i]() {
             classParts[i].freqDictInfillThread(docs[i]);
@@ -149,9 +117,9 @@ void InvertedIndex::threadsDistribution()
     {
         t.join();
     }
+#endif
 
     dataMerge();
-
 }
 
 

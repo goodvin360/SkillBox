@@ -4,7 +4,7 @@
 #include "InvertedIndex.h"
 #include "SearchServer.h"
 #include "thread"
-
+#include "ctime"
 
 void showDocs()
 {
@@ -38,6 +38,7 @@ int main() {
 
 //    createJsons();
 //    showDocs();
+    time_t start_time = time(nullptr);
 
     ConverterJson conv;
     conv.GetResponseLimit();
@@ -48,8 +49,8 @@ int main() {
     SearchServer serv(inv, conv);
     conv.putAnswers(serv.searchFoo(conv.GetRequestsData()));
 
-
-
+    time_t finish_time = time(nullptr);;
+    std::cout << "Program running time: " << std::difftime(finish_time,start_time) << " seconds." << std::endl;
 
     std::cout << "Program finished. Good bye :) " << std::endl;
     return 0;
