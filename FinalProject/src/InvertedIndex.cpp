@@ -1,14 +1,44 @@
 #include "InvertedIndex.h"
 
+
+std::mutex myMutex;
+
 void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs)
 {
     docs = input_docs;
-    freqDictionaryInfill();
-    /*    for (auto it2:docs)
+//    freqDictionaryInfill();
+
+//    for (auto it:docs)
+//        freqDictInfillThread(it);
+
+/*        for (auto it2:docs)
     {
         std::cout << it2 << std::endl;
         std::cout << std::endl;
     }*/
+
+    std::vector<std::thread> ThreadVector;
+    for (auto it: docs)
+    {
+        ThreadVector.emplace_back([&]()
+        {
+                freqDictInfillThread(it);
+        });
+
+        std::this_thread::sleep_for(std::chrono::milliseconds (1));
+/*        std::thread th([&](){freqDictInfillThread(it);});
+        std::this_thread::sleep_for(std::chrono::milliseconds(0));
+        th.join();*/
+    }
+
+
+
+    for(auto& t: ThreadVector)
+    {
+        std::cout << "This is call to join() for worker thread number: " << t.get_id() << std::endl;
+        t.join();
+    }
+
 }
 
 std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word)
@@ -78,8 +108,35 @@ void InvertedIndex::freqDictionaryInfill()
     }*/
 }
 
+void InvertedIndex::freqDictInfillThread(std::string &textFromDoc)
+{
+
+    myMutex.lock();
+    std::cout << "This is " << std::this_thread::get_id() << " thread." << std::endl;
+    std::string data = textFromDoc;
+        int i=0;
+        std::string test;
+        while (data[i])
+        {
+            if (data[i]!=' ' && data[i]!='\0')
+            {
+                test.push_back(data[i]);
+            }
+            if ((data[i]==' ' || data[i+1]=='\0') && test.size()!=0)
+            {
+                freq_dictionary.insert({test, GetWordCount(test)});
+                /*std::cout << test << '\t';
+                std::cout << std::endl;*/
+                test.clear();
+            }
+            i++;
+        }
+    myMutex.unlock();
+}
+
 std::map<std::string, std::vector<Entry>> *InvertedIndex::getFreqDictionary()
 {
     return &freq_dictionary;
 }
+
 

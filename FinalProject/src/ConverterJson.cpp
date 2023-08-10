@@ -1,5 +1,6 @@
 #include "ConverterJson.h"
 
+
 std::vector<std::string> ConverterJson::GetTextDocuments()
 {
     textFromDocs.clear();
