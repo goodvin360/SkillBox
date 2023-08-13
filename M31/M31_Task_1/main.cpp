@@ -34,5 +34,8 @@ int main() {
         }
     }
 
+    for (auto &it:dogs)
+        delete it;
+
     return 0;
 }
