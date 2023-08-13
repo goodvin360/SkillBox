@@ -150,12 +150,12 @@ void ConverterJson::putAnswers(std::vector<std::vector<std::pair<int, float>>> a
     std::vector<std::pair<std::pair<std::string,int>,std::pair<std::string,float>>> vecData;
     for (int i=0; i<answers.size(); i++)
     {
-        float var=0;
+        float check=0;
         for (int j=0; j<answers[i].size();j++)
         {
-            var+=answers[i][j].second;
+            check+=answers[i][j].second;
         }
-        if (var>0)
+        if (check>0)
             ans.flag = true;
         else ans.flag = false;
 
