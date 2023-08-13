@@ -11,7 +11,7 @@ std::vector<std::vector<std::pair<int, float>>> SearchServer::searchFoo(const st
             }
             std::cout << std::endl;
         }*/
-
+    int reqCounter=0;
     for (int i=0; i<queries_input.size(); i++)
     {
         int j=0;
@@ -73,17 +73,41 @@ std::vector<std::vector<std::pair<int, float>>> SearchServer::searchFoo(const st
             reverseMyMap.insert({it.second,it.first});
         }
 
-        for (std::multimap<int, int>::reverse_iterator it=reverseMyMap.rbegin(); it!=reverseMyMap.rend(); it++)
+        for (auto it=reverseMyMap.rbegin(); it!=reverseMyMap.rend(); it++)
         {
             std::pair<int,float> tempIndex;
             tempIndex.first = it->second;
             if (maxAbsRelevance!=0)
                 tempIndex.second = floorf(100*(float)(it->first)/maxAbsRelevance)/100;
             else tempIndex.second = 0;
-            relativeIndex.push_back(tempIndex);
+            if (tempIndex.second>0)
+            {
+                relativeIndex.push_back(tempIndex);
+            }
         }
 
-        result.push_back(relativeIndex);
+        std::vector<std::pair<int, float>> relativeIndexTemp1;
+        std::vector<std::pair<int, float>> relativeIndexTemp2;
+        for (int i=0; i<relativeIndex.size();i++)
+        {
+            while (relativeIndex[i].second==relativeIndex[i+1].second)
+            {
+                relativeIndexTemp1.push_back(relativeIndex[i]);
+                i++;
+            }
+            relativeIndexTemp1.push_back(relativeIndex[i]);
+            std::sort(relativeIndexTemp1.begin(), relativeIndexTemp1.end());
+            for (auto it:relativeIndexTemp1)
+            {
+                if (reqCounter<dataJson.GetResponseLimit())
+                {
+                    relativeIndexTemp2.push_back(it);
+                    reqCounter++;
+                }
+            }
+            relativeIndexTemp1.clear();
+        }
+        result.push_back(relativeIndexTemp2);
         uniqRequests.clear();
         preRelevance.clear();
         relativeIndex.clear();

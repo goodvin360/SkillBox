@@ -6,7 +6,6 @@ std::mutex myMutex;
 void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs)
 {
     docs = input_docs;
-
 /*        for (auto it2:docs)
     {
         std::cout << it2 << std::endl;
@@ -43,16 +42,14 @@ std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word)
         if (temp.count!=0)
             wordData.push_back(temp);
     }
-/*    for (auto it:wordData)
-        std::cout << it.doc_id << '\t' << it.count << std::endl;*/
     return wordData;
 }
 
 void InvertedIndex::freqDictInfillThread(std::string &textFromDoc)
 {
-    myMutex.lock();
+/*    myMutex.lock();
     std::cout << "This is thread number: " << std::this_thread::get_id() << std::endl;
-    myMutex.unlock();
+    myMutex.unlock();*/
         int i=0;
         std::string test;
         while (textFromDoc[i])
@@ -94,7 +91,7 @@ void InvertedIndex::threadsDistribution()
     for (auto it:docs)
     {
         InvertedIndex tempPart(jsonData);
-        tempPart.UpdateDocumentBase(jsonData.GetTextDocuments());
+        tempPart.UpdateDocumentBase(docs);
         classParts.push_back(tempPart);
     }
 

@@ -10,12 +10,13 @@ void JsonFill::fillFile(std::string type)
         configExample.files.push_back("../resources/file001.txt");
         configExample.files.push_back("../resources/file002.txt");
         configExample.files.push_back("../resources/file003.txt");
+        configExample.files.push_back("../resources/file004.txt");
     }
     else if(type=="request")
     {
-        requestExample.requests.push_back("the sugar ");
-        requestExample.requests.push_back("a milk b c");
-        requestExample.requests.push_back("It pepper salt milk number one saw");
+        requestExample.requests.push_back("milk water");
+        requestExample.requests.push_back("sugar");
+//        requestExample.requests.push_back("It pepper salt milk number one saw");
     }
 }
 

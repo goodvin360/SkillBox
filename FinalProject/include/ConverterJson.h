@@ -21,6 +21,12 @@ struct Answer
 class ConverterJson
 {
 public:
+    ConverterJson(std::string def){};
+    ConverterJson(std::vector<std::string> &inDocs, std::vector<std::string> &inReqs)
+    {
+           textFromDocs = inDocs;
+           requests = inReqs;
+    };
     ConverterJson()
     {
         std::ifstream configRead("../config.json");
@@ -48,7 +54,7 @@ public:
 
 private:
     int numOfFiles=0;
-    int respLimit=0;
+    int respLimit=5;
     std::vector<std::string> textFromDocs{};
     std::vector<std::string> requests{};
     std::vector<std::string> filePaths;
