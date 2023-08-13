@@ -4,21 +4,44 @@
             " result": true,
             "relevance": [
                 {
-                    "docID": 2,
+                    "docID": 1,
                     "rank": 1.0
                 },
                 {
                     "docID": 0,
-                    "rank": 0.699999988079071
-                },
-                {
-                    "docID": 1,
-                    "rank": 0.30000001192092896
+                    "rank": 0.25
                 }
             ]
         },
         "request002": {
-            " result": false
+            " result": true,
+            "relevance": [
+                {
+                    "docID": 0,
+                    "rank": 0.25
+                },
+                {
+                    "docID": 0,
+                    "rank": 0.25
+                }
+            ]
+        },
+        "request003": {
+            " result": true,
+            "relevance": [
+                {
+                    "docID": 1,
+                    "rank": 1.0
+                },
+                {
+                    "docID": 0,
+                    "rank": 0.25
+                },
+                {
+                    "docID": 2,
+                    "rank": 0.25
+                }
+            ]
         }
     }
 }

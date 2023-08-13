@@ -24,7 +24,6 @@ public:
 
     void UpdateDocumentBase(std::vector<std::string> input_docs);
     std::vector<Entry> GetWordCount (const std::string &word);
-    void freqDictionaryInfill();
     void freqDictInfillThread(std::string &textFromDoc);
     void dataMerge();
     void threadsDistribution();

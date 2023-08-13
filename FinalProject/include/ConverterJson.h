@@ -18,41 +18,51 @@ struct Answer
     bool flag;
 };
 
+class failFileOpenException : public std::exception
+{
+    const char* what() const noexcept override
+    {
+        return "No file 'config.json'!";
+    }
+};
+
+class failConfigException : public std::exception
+{
+    const char* what() const noexcept override
+    {
+        return "No field 'config' in 'config.json'!";
+    }
+};
+
+class failEmptyDataBase : public std::exception
+{
+    const char* what() const noexcept override
+    {
+        return "All documents in search base are empty!";
+    }
+};
+
 class ConverterJson
 {
 public:
-    ConverterJson(std::string def){};
-    ConverterJson(std::vector<std::string> &inDocs, std::vector<std::string> &inReqs)
+    ConverterJson();
+    ConverterJson (std::vector<std::string> &inDocs, std::vector<std::string> &inReqs)
     {
            textFromDocs = inDocs;
            requests = inReqs;
-    };
-    ConverterJson()
-    {
-        std::ifstream configRead("../config.json");
-        if(!configRead.is_open())
-        {
-            std::cerr << "Error while opening file config.json."<<std::endl;
-            std::terminate();
-            //to do exception throw
-        }
-        configRead >> configFile;
-        configRead.close();
-
-        std::ifstream requestRead("../request.json");
-        requestRead >> requestFile;
-        requestRead.close();
     };
 
     std::vector<std::string> GetTextDocuments();
     int GetFilesNum();
     int GetResponseLimit();
-    std::vector<std::string> GetRequests();
-    void putAnswers(std::vector<std::vector<std::pair<int, float>>> answers);
     const std::vector<std::string> GetRequestsData();
+    void putAnswers(std::vector<std::vector<std::pair<int, float>>> answers);
 
 
 private:
+    void readConfig();
+    void ResponseLimit();
+    std::vector<std::string> GetRequests();
     int numOfFiles=0;
     int respLimit=5;
     std::vector<std::string> textFromDocs{};

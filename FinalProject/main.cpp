@@ -42,7 +42,7 @@ int main() {
 
     ConverterJson conv;
     conv.GetResponseLimit();
-    conv.GetRequests();
+    conv.GetRequestsData();
     InvertedIndex inv(conv);
     inv.UpdateDocumentBase(conv.GetTextDocuments());
     inv.threadsDistribution();

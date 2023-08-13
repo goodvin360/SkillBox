@@ -47,7 +47,7 @@ std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word)
 
 void InvertedIndex::freqDictInfillThread(std::string &textFromDoc)
 {
-/*    myMutex.lock();
+    /*myMutex.lock();
     std::cout << "This is thread number: " << std::this_thread::get_id() << std::endl;
     myMutex.unlock();*/
         int i=0;
@@ -75,7 +75,6 @@ void InvertedIndex::dataMerge()
     {
         for (auto it2 = it.freq_dictionary.begin(); it2!=it.freq_dictionary.end(); it2++)
         {
-//            std::cout << it2->first << std::endl;
             freq_dictionary.insert({it2->first,it2->second});
         }
     }

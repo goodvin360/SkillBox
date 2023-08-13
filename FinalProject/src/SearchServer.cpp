@@ -2,126 +2,118 @@
 
 std::vector<std::vector<std::pair<int, float>>> SearchServer::searchFoo(const std::vector<std::string> &queries_input)
 {
-/*    for (auto it=index.getFreqDictionary()->begin();it!=index.getFreqDictionary()->end();it++)
-        {
-            std::cout << it->first << std::endl;
-            for (int i=0; i<it->second.size();i++)
-            {
-                std::cout << it->second[i].doc_id << " " << it->second[i].count << std::endl;
-            }
-            std::cout << std::endl;
-        }*/
-    int reqCounter=0;
     for (int i=0; i<queries_input.size(); i++)
     {
-        int j=0;
-        std::string test;
-        while (queries_input[i][j])
-        {
-            if (queries_input[i][j]!=' ' && queries_input[i][j]!='\0')
-            {
-                test.push_back(queries_input[i][j]);
-            }
-            if ((queries_input[i][j]==' ' || queries_input[i][j+1]=='\0') && test.size()!=0)
-            {
-/*                std::cout << test << '\t';
-                std::cout << std::endl;*/
-                uniqRequests.insert({test,0});
-                test.clear();
-            }
-            j++;
-        }
+        uniqRequestsFill(queries_input[i]);
+        preRelevanceFill();
+        maxAbsRelevance = findMaxAbsRel();
+        result.push_back(sortRelativeIndex());
+    }
+    return result;
+}
 
-        for (int m=0; m<dataJson.GetFilesNum(); m++)
+void SearchServer::uniqRequestsFill(const std::string& request)
+{
+    uniqRequests.clear();
+    int i=0;
+    std::string test;
+    while (request[i])
+    {
+        if (request[i]!=' ' && request[i]!='\0')
         {
-            int absRelevance=0;
-            for (auto it=uniqRequests.begin(); it!=uniqRequests.end();it++)
+            test.push_back(request[i]);
+        }
+        if ((request[i]==' ' || request[i+1]=='\0') && test.size()!=0)
+        {
+            uniqRequests.insert({test,0});
+            test.clear();
+        }
+        i++;
+    }
+}
+
+void SearchServer::preRelevanceFill()
+{
+    preRelevance.clear();
+    for (int i=0; i<dataJson.GetFilesNum(); i++)
+    {
+        int absRelevance=0;
+        for (auto it:uniqRequests)
+        {
+            auto it2 = index.getFreqDictionary()->find(it.first);
+            if (it2!=index.getFreqDictionary()->end())
             {
-                auto it2 = index.getFreqDictionary()->find(it->first);
-                if (it2!=index.getFreqDictionary()->end())
+                for (int j=0; j<it2->second.size(); j++)
                 {
-                    for (int k=0; k<it2->second.size(); k++)
+                    if(it2->second[j].doc_id==i)
                     {
-                        if(it2->second[k].doc_id==m)
-                        {
-                            absRelevance+=it2->second[k].count;
-                        }
+                        absRelevance+=it2->second[j].count;
                     }
                 }
             }
-            preRelevance.insert({m,absRelevance});
         }
-        /*std::cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
+        preRelevance.insert({i,absRelevance});
+    }
+}
 
-        for (auto it=preRelevance.begin();it!=preRelevance.end();it++)
+int SearchServer::findMaxAbsRel()
+{
+    for (auto it=preRelevance.begin(); it!=preRelevance.end(); it++)
+    {
+        if (it->second > maxAbsRelevance)
         {
-            std::cout << it->first << " " << it->second << std::endl;
-        }*/
-
-        int maxAbsRelevance = 0;
-        for (auto it=preRelevance.begin(); it!=preRelevance.end(); it++)
-        {
-            if (it->second > maxAbsRelevance)
-            {
-                maxAbsRelevance = it->second;
-            }
+            maxAbsRelevance = it->second;
         }
+    }
+    return maxAbsRelevance;
+}
 
-        std::multimap<int, int> reverseMyMap;
-        for (auto it : preRelevance)
-        {
-            reverseMyMap.insert({it.second,it.first});
-        }
+std::vector<std::pair<int, float>> SearchServer::sortRelativeIndex()
+{
+    int counter=0;
+    relativeIndex.clear();
 
-        for (auto it=reverseMyMap.rbegin(); it!=reverseMyMap.rend(); it++)
-        {
-            std::pair<int,float> tempIndex;
-            tempIndex.first = it->second;
-            if (maxAbsRelevance!=0)
-                tempIndex.second = floorf(100*(float)(it->first)/maxAbsRelevance)/100;
-            else tempIndex.second = 0;
-            if (tempIndex.second>0)
-            {
-                relativeIndex.push_back(tempIndex);
-            }
-        }
-
-        std::vector<std::pair<int, float>> relativeIndexTemp1;
-        std::vector<std::pair<int, float>> relativeIndexTemp2;
-        for (int i=0; i<relativeIndex.size();i++)
-        {
-            while (relativeIndex[i].second==relativeIndex[i+1].second)
-            {
-                relativeIndexTemp1.push_back(relativeIndex[i]);
-                i++;
-            }
-            relativeIndexTemp1.push_back(relativeIndex[i]);
-            std::sort(relativeIndexTemp1.begin(), relativeIndexTemp1.end());
-            for (auto it:relativeIndexTemp1)
-            {
-                if (reqCounter<dataJson.GetResponseLimit())
-                {
-                    relativeIndexTemp2.push_back(it);
-                    reqCounter++;
-                }
-            }
-            relativeIndexTemp1.clear();
-        }
-        result.push_back(relativeIndexTemp2);
-        uniqRequests.clear();
-        preRelevance.clear();
-        relativeIndex.clear();
+    std::multimap<int, int> reverseMyMap;
+    for (auto it : preRelevance)
+    {
+        reverseMyMap.insert({it.second,it.first});
     }
 
-/*    for (int i=0; i<result.size(); i++)
+    for (auto it=reverseMyMap.rbegin(); it!=reverseMyMap.rend(); it++)
     {
-        std::cout << "request num " << i+1 << std::endl;
-        for (int j=0; j<result[i].size(); j++)
+        std::pair<int,float> tempIndex;
+        tempIndex.first = it->second;
+        if (maxAbsRelevance!=0)
+            tempIndex.second = floorf(100*(float)(it->first)/maxAbsRelevance)/100;
+        else tempIndex.second = 0;
+        if (tempIndex.second>0)
         {
-            std::cout << result[i][j].first << " " << result[i][j].second << std::endl;
+            relativeIndex.push_back(tempIndex);
         }
-        std::cout << std::endl;
-    }*/
+    }
 
-    return result;
+    std::vector<std::pair<int, float>> relativeIndexTemp1;
+    std::vector<std::pair<int, float>> relativeIndexTemp2;
+
+    for (int i=0; i<relativeIndex.size();i++)
+    {
+        while (relativeIndex[i].second==relativeIndex[i+1].second)
+        {
+            relativeIndexTemp1.push_back(relativeIndex[i]);
+            i++;
+        }
+        relativeIndexTemp1.push_back(relativeIndex[i]);
+        std::sort(relativeIndexTemp1.begin(), relativeIndexTemp1.end());
+        for (auto it:relativeIndexTemp1)
+        {
+            if (counter<dataJson.GetResponseLimit())
+            {
+                relativeIndexTemp2.push_back(it);
+                counter++;
+            }
+        }
+        relativeIndexTemp1.clear();
+    }
+
+    return relativeIndexTemp2;
 }

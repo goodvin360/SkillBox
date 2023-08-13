@@ -22,7 +22,11 @@ private:
     std::multimap<int,int> preRelevance;
     std::vector<std::vector<std::pair<int, float>>> result;
     std::vector<std::pair<int, float>> relativeIndex;
-
+    void uniqRequestsFill(const std::string& request);
+    void preRelevanceFill();
+    int findMaxAbsRel();
+    int maxAbsRelevance = 0;
+    std::vector<std::pair<int, float>> sortRelativeIndex();
 };
 
 #endif //FINALPROJECT_SEARCHSERVER_H
