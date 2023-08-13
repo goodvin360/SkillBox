@@ -36,8 +36,8 @@ void createJsons()
 
 int main() {
 
-    createJsons();
-    showDocs();
+//    createJsons();
+//    showDocs();
     time_t start_time = time(nullptr);
 
     ConverterJson conv;
