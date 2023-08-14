@@ -43,6 +43,12 @@ int main() {
     c.getToy(newToy2);
     c.showToy();
 
+
+    auto p1 = Shared_ptr_toy::make_shared_toy(newToy1);
+    auto p2 = p1;
+//    c.getToy(p1);
+
+
     // check refs num
     std::cout << "Num of refs " << ball.obj->name << " toy: " << ball.getCount() << std::endl;
     std::cout << "Num of refs " << bone.obj->name << " toy: " << bone.getCount() << std::endl;

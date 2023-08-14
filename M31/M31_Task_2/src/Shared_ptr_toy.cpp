@@ -15,12 +15,14 @@ Shared_ptr_toy::Shared_ptr_toy(std::string inName) : refCount(new int(1))
 
 Shared_ptr_toy::Shared_ptr_toy(const Shared_ptr_toy &oth)
 {
-
+    obj = new Toy(*oth.obj);
+    refCount=oth.refCount;
+    (*refCount)++;
 }
 
 Shared_ptr_toy &Shared_ptr_toy::operator=(const Shared_ptr_toy &oth)
 {
-    if (this==&oth)
+    if (&oth==this)
         return *this;
     if (obj!= nullptr)
         delete obj;
