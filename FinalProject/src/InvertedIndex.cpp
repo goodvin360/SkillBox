@@ -49,7 +49,8 @@ void InvertedIndex::freqDictInfillThread(std::string &textFromDoc)
 {
     /*myMutex.lock();
     std::cout << "This is thread number: " << std::this_thread::get_id() << std::endl;
-    myMutex.unlock();*/
+    myMutex.unlock();
+    std::this_thread::sleep_for(std::chrono::seconds(2));*/
         int i=0;
         std::string test;
         while (textFromDoc[i])
