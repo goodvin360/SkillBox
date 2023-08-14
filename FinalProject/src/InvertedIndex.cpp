@@ -19,28 +19,30 @@ std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word)
     std::vector<Entry> wordData{};
     for (int i=0; i<docs.size(); i++)
     {
-        Entry temp;
-        temp.doc_id = i;
-        temp.count=0;
+        Entry wordEntry;
+        wordEntry.doc_id = i;
+        wordEntry.count=0;
 
         int j=0;
-        std::string test;
+        std::string tempWord;
         while (docs[i][j])
         {
-            if (docs[i][j]!=' '|| docs[i][j+1]=='\0')
+            if (docs[i][j]!=' '&& docs[i][j]!='\0' && docs[i][j]!=',' && docs[i][j]!='.'
+          && docs[i][j]!='!' && docs[i][j]!='?' && docs[i][j]!=';' && docs[i][j]!=':')
             {
-                test.push_back(docs[i][j]);
+                tempWord.push_back(docs[i][j]);
             }
-            if (docs[i][j]==' '|| docs[i][j+1]=='\0')
+            if (docs[i][j]==' '|| docs[i][j+1]=='\0' || docs[i][j]==',' || docs[i][j]=='.'
+           || docs[i][j]=='!' || docs[i][j]=='?' || docs[i][j]==';' || docs[i][j]==':')
             {
-                if (std::strcmp(word.c_str(),test.c_str())==0)
-                    temp.count++;
-                test.clear();
+                if (std::strcmp(word.c_str(),tempWord.c_str())==0)
+                    wordEntry.count++;
+                tempWord.clear();
             }
             j++;
         }
-        if (temp.count!=0)
-            wordData.push_back(temp);
+        if (wordEntry.count!=0)
+            wordData.push_back(wordEntry);
     }
     return wordData;
 }
@@ -52,19 +54,21 @@ void InvertedIndex::freqDictInfillThread(std::string &textFromDoc)
     myMutex.unlock();
     std::this_thread::sleep_for(std::chrono::seconds(2));*/
         int i=0;
-        std::string test;
+        std::string singleWord;
         while (textFromDoc[i])
         {
-            if (textFromDoc[i]!=' ' && textFromDoc[i]!='\0')
+            if (textFromDoc[i]!=' ' && textFromDoc[i]!='\0' && textFromDoc[i]!=',' && textFromDoc[i]!='.'
+               && textFromDoc[i]!='!' && textFromDoc[i]!='?' && textFromDoc[i]!=';' && textFromDoc[i]!=':')
             {
-                test.push_back(textFromDoc[i]);
+                singleWord.push_back(textFromDoc[i]);
             }
-            if ((textFromDoc[i]==' ' || textFromDoc[i+1]=='\0') && test.size()!=0)
+            if ((textFromDoc[i]==' ' || textFromDoc[i+1]=='\0' || textFromDoc[i]==',' || textFromDoc[i]=='.'
+            || textFromDoc[i]=='!' || textFromDoc[i]=='?' || textFromDoc[i]==';' || textFromDoc[i]==':') && !singleWord.empty())
             {
-                freq_dictionary.insert({test, GetWordCount(test)});
+                freq_dictionary.insert({singleWord, GetWordCount(singleWord)});
                 /*std::cout << test << '\t';
                 std::cout << std::endl;*/
-                test.clear();
+                singleWord.clear();
             }
             i++;
         }
