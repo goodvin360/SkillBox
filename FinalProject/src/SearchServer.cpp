@@ -19,13 +19,13 @@ void SearchServer::uniqRequestsFill(const std::string& request)
     std::string requestWord;
     while (request[i])
     {
-        if (request[i]!=' ' && request[i]!='\0' && request[i]!=',' && request[i]!='.'
-       && request[i]!='!' && request[i]!='?' && request[i]!=';' && request[i]!=':')
+        char tmpSym = request[i];
+        char tmpNxtSym = request[i+1];
+        if (index.characterCondition(tmpSym))
         {
             requestWord.push_back(request[i]);
         }
-        if ((request[i]==' ' || request[i+1]=='\0' || request[i]==',' || request[i]=='.'
-        || request[i]=='!' || request[i]=='?' || request[i]==';' || request[i]==':') && !requestWord.empty())
+        if (index.wordCondition(tmpSym,tmpNxtSym))
         {
             uniqRequests.insert({requestWord,0});
             requestWord.clear();

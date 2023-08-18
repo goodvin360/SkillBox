@@ -27,6 +27,8 @@ public:
     void freqDictInfillThread(std::string &textFromDoc);
     void dataMerge();
     void threadsDistribution();
+    bool characterCondition(char &symbol);
+    bool wordCondition(char &symbol, char& nextSymbol);
     std::map<std::string, std::vector<Entry>>* getFreqDictionary();
 
 private:

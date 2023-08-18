@@ -14,6 +14,23 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs)
     */
 }
 
+bool InvertedIndex::characterCondition(char &symbol)
+{
+    if (symbol!=' ' && symbol!='\0' && symbol!=',' && symbol!='.'
+        && symbol!='!' && symbol!='?' && symbol!=';' && symbol!=':')
+    {
+        return true;
+    } else return false;
+}
+
+bool InvertedIndex::wordCondition(char &symbol, char &nextSymbol) {
+    if (symbol==' '|| nextSymbol=='\0' || symbol==',' || symbol=='.'
+        || symbol=='!' || symbol=='?' || symbol==';' || symbol==':')
+    {
+        return true;
+    } else return false;
+}
+
 std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word)
 {
     std::vector<Entry> wordData{};
@@ -27,13 +44,11 @@ std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word)
         std::string tempWord;
         while (docs[i][j])
         {
-            if (docs[i][j]!=' '&& docs[i][j]!='\0' && docs[i][j]!=',' && docs[i][j]!='.'
-          && docs[i][j]!='!' && docs[i][j]!='?' && docs[i][j]!=';' && docs[i][j]!=':')
+            if (characterCondition(docs[i][j]))
             {
                 tempWord.push_back(docs[i][j]);
             }
-            if (docs[i][j]==' '|| docs[i][j+1]=='\0' || docs[i][j]==',' || docs[i][j]=='.'
-           || docs[i][j]=='!' || docs[i][j]=='?' || docs[i][j]==';' || docs[i][j]==':')
+            if (wordCondition(docs[i][j],docs[i][j+1]))
             {
                 if (std::strcmp(word.c_str(),tempWord.c_str())==0)
                     wordEntry.count++;
@@ -57,13 +72,11 @@ void InvertedIndex::freqDictInfillThread(std::string &textFromDoc)
         std::string singleWord;
         while (textFromDoc[i])
         {
-            if (textFromDoc[i]!=' ' && textFromDoc[i]!='\0' && textFromDoc[i]!=',' && textFromDoc[i]!='.'
-               && textFromDoc[i]!='!' && textFromDoc[i]!='?' && textFromDoc[i]!=';' && textFromDoc[i]!=':')
+            if (characterCondition(textFromDoc[i]))
             {
                 singleWord.push_back(textFromDoc[i]);
             }
-            if ((textFromDoc[i]==' ' || textFromDoc[i+1]=='\0' || textFromDoc[i]==',' || textFromDoc[i]=='.'
-            || textFromDoc[i]=='!' || textFromDoc[i]=='?' || textFromDoc[i]==';' || textFromDoc[i]==':') && !singleWord.empty())
+            if (wordCondition(textFromDoc[i], textFromDoc[i+1]))
             {
                 freq_dictionary.insert({singleWord, GetWordCount(singleWord)});
                 /*std::cout << test << '\t';
@@ -122,6 +135,7 @@ void InvertedIndex::threadsDistribution()
 
     dataMerge();
 }
+
 
 
 
