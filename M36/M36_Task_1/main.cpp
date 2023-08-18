@@ -96,6 +96,9 @@ int main(int argc, char *argv[])
     window->show();
 
     return app.exec();
+    delete fig;
+    delete slider;
+    delete window;
 }
 
 #include <main.moc>
